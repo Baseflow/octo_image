@@ -325,7 +325,7 @@ class _OctoImageState extends State<OctoImage> {
       loadingBuilder:
           placeholderType == _PlaceholderType.progress ? _loadingBuilder : null,
       frameBuilder: frameBuilder,
-      errorBuilder: _errorBuilder,
+      errorBuilder: widget.errorBuilder != null ? _errorBuilder : null,
       fit: widget.fit,
       width: widget.width,
       height: widget.height,
@@ -447,8 +447,8 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   _PlaceholderType _definePlaceholderType() {
-    assert(widget.placeholderBuilder != null ||
-        widget.progressIndicatorBuilder != null);
+    assert(widget.placeholderBuilder == null ||
+        widget.progressIndicatorBuilder == null);
 
     if (widget.placeholderBuilder != null) return _PlaceholderType.static;
     if (widget.progressIndicatorBuilder != null) {
