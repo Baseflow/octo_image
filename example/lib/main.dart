@@ -26,9 +26,28 @@ class OctoImagePage extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          _customImage(),
           _simpleBlur(),
           _circleAvatar(),
         ],
+      ),
+    );
+  }
+
+  Widget _customImage() {
+    return SizedBox(
+      height: 150,
+      child: OctoImage(
+        image: CachedNetworkImageProvider('https://via.placeholder.com/150'),
+        progressIndicatorBuilder: (context, progress) {
+          double value;
+          if (progress != null && progress.expectedTotalBytes != null) {
+            value =
+                progress.cumulativeBytesLoaded / progress.expectedTotalBytes;
+          }
+          return CircularProgressIndicator(value: value);
+        },
+        errorBuilder: (context, error, stacktrace) => Icon(Icons.error),
       ),
     );
   }
@@ -37,7 +56,8 @@ class OctoImagePage extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 269 / 173,
       child: OctoImage(
-        image: CachedNetworkImageProvider('https://blurha.sh/assets/images/img1.jpg'),
+        image: CachedNetworkImageProvider(
+            'https://blurha.sh/assets/images/img1.jpg'),
         placeholderBuilder: OctoPlaceholder.blurHash(
           'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
         ),
