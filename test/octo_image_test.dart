@@ -71,21 +71,50 @@ void main() {
     expect(thrown, isFalse);
     expect(placeholderShown, isTrue);
   });
+
+  testWidgets('progressIndicator called several times', (tester) async {
+    // Create the widget by telling the tester to build it.
+    var progressIndicatorCalled = 0;
+    var thrown = false;
+    await tester.pumpWidget(MyWidget(
+      useCase: TestUseCase.loadAndSuccess,
+      onProgress: () => progressIndicatorCalled++,
+      onError: () => thrown = true,
+    ));
+    for(var i=0; i< 10; i++) {
+      await tester.pump(Duration(milliseconds: 10));
+    }
+    expect(thrown, isFalse);
+    expect(progressIndicatorCalled, 11);
+  });
 }
 
 class MyWidget extends StatelessWidget {
   final TestUseCase useCase;
+  final OctoProgressIndicatorBuilder progressBuilder;
   final OctoPlaceholderBuilder placeholderBuilder;
   final OctoErrorBuilder errorBuilder;
 
   MyWidget({
     Key key,
     @required this.useCase,
+    VoidCallback onProgress,
     VoidCallback onPlaceHolder,
     VoidCallback onError,
-  })  : placeholderBuilder = getPlaceholder(onPlaceHolder),
+  })  : progressBuilder = getProgress(onProgress),
+        placeholderBuilder = getPlaceholder(onPlaceHolder),
         errorBuilder = getErrorBuilder(onError),
         super(key: key);
+
+
+  static OctoProgressIndicatorBuilder getProgress(VoidCallback onProgress) {
+    if (onProgress == null) return null;
+    return (context, progress) {
+      onProgress();
+      return CircularProgressIndicator();
+    };
+  }
+
 
   static OctoPlaceholderBuilder getPlaceholder(VoidCallback onPlaceHolder) {
     if (onPlaceHolder == null) return null;
@@ -111,6 +140,7 @@ class MyWidget extends StatelessWidget {
         body: Center(
           child: OctoImage(
             image: MockImageProvider(useCase: useCase),
+            progressIndicatorBuilder: progressBuilder,
             placeholderBuilder: placeholderBuilder,
             errorBuilder: errorBuilder,
           ),
