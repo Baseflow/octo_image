@@ -227,7 +227,6 @@ class OctoImage extends StatefulWidget {
         assert(matchTextDirection != null),
         super(key: key);
 
-
   /// Creates an OctoWidget that displays an image with a predefined [OctoSet].
   /// The [image] is an ImageProvider and the OctoImage should work with any
   /// [ImageProvider]. The widget is optimized for [CachedNetworkImageProvider](https://pub.dev/packages/cached_network_image).

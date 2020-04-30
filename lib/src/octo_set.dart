@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+
 import '../octo_image.dart';
+import 'image_transformers.dart';
 
 /// OctoSets are predefined combinations of a [OctoPlaceholderBuilder],
 /// [OctoProgressIndicatorBuilder], [OctoImageBuilder] and/or [OctoErrorBuilder].
@@ -33,6 +36,21 @@ class OctoSet {
     return OctoSet._(
       placeholderBuilder: OctoPlaceholder.circularProgressIndicator(),
       errorBuilder: OctoError.icon(),
+    );
+  }
+
+  /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
+  /// placeholder and [OctoError.icon] as error.
+  factory OctoSet.circleAvatar({
+    @required Color backgroundColor,
+    @required Widget text,
+  }) {
+    return OctoSet._(
+      placeholderBuilder: OctoPlaceholder.circleAvatar(
+          backgroundColor: backgroundColor, text: text),
+      imageBuilder: OctoImageTransformer.circleAvatar(),
+      errorBuilder:
+          OctoError.circleAvatar(backgroundColor: backgroundColor, text: text),
     );
   }
 }

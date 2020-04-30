@@ -13,10 +13,13 @@ enum AnimationDirection {
 class FadeWidget extends StatefulWidget {
   /// Child widget being faded
   final Widget child;
+
   /// Fade duration
   final Duration duration;
+
   /// Duration direction, forward is from invisible to visible
   final AnimationDirection direction;
+
   /// Animation curve. See [Curves] for more options.
   final Curve curve;
 

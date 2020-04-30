@@ -30,7 +30,21 @@ class OctoPlaceholder {
 
   /// Displays a frame as placeholer. From the framework [Placeholder] widget.
   static OctoPlaceholderBuilder frame() {
-    return (context) =>
-        const SizedBox.expand(child: Placeholder());
+    return (context) => const SizedBox.expand(child: Placeholder());
+  }
+
+  /// Displays a [CircleAvatar] as placeholder
+  static OctoPlaceholderBuilder circleAvatar({
+    @required Color backgroundColor,
+    @required Widget text,
+  }) {
+    return (context) => SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: CircleAvatar(
+            child: text,
+            backgroundColor: backgroundColor,
+          ),
+        );
   }
 }

@@ -21,4 +21,19 @@ class OctoError {
           color: color,
         );
   }
+
+  /// Displays a [CircleAvatar] as errorWidget
+  static OctoErrorBuilder circleAvatar({
+    @required Color backgroundColor,
+    @required Widget text,
+  }) {
+    return (context, error, stacktrace) => SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: CircleAvatar(
+            child: text,
+            backgroundColor: backgroundColor,
+          ),
+        );
+  }
 }
