@@ -128,10 +128,6 @@ class OctoImage extends StatefulWidget {
   /// Optional headers for the http request of the image url
   final Map<String, String> httpHeaders;
 
-  /// When set to true it will animate from the old image to the new image
-  /// if the url changes.
-  final bool useOldImageOnUrlChange; //TODO can we still support this?
-
   /// If non-null, this color is blended with each image pixel using
   /// [colorBlendMode].
   final Color color;
@@ -205,7 +201,6 @@ class OctoImage extends StatefulWidget {
     this.repeat = ImageRepeat.noRepeat,
     this.matchTextDirection = false,
     this.httpHeaders,
-    this.useOldImageOnUrlChange = false,
     this.color,
     this.filterQuality = FilterQuality.low,
     this.colorBlendMode,
@@ -271,7 +266,6 @@ class OctoImage extends StatefulWidget {
     this.repeat = ImageRepeat.noRepeat,
     this.matchTextDirection = false,
     this.httpHeaders,
-    this.useOldImageOnUrlChange = false,
     this.color,
     this.filterQuality = FilterQuality.low,
     this.colorBlendMode,
