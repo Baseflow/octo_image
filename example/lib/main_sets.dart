@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          OctoSet.simple(),
-          OctoSet.simple(showProgress: true),
+          OctoSet.circularIndicatorAndIcon(),
+          OctoSet.circularIndicatorAndIcon(showProgress: true),
         ],
       ),
     );
@@ -42,9 +42,7 @@ class OctoImagePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Set Demo'),
       ),
-      body: ListView(
-        children: sets.map((element) => _row(element)).toList()
-      ),
+      body: ListView(children: sets.map((element) => _row(element)).toList()),
     );
   }
 

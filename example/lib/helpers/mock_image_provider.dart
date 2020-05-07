@@ -56,13 +56,13 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
               cumulativeBytesLoaded: i + 1, expectedTotalBytes: totalSize));
         }
       }
-      if(fail){
+      if (fail) {
         throw Exception("Image loading failed");
       }
-      var file = await DefaultCacheManager().getSingleFile('https://blurha.sh/assets/images/img1.jpg');
+      var file = await DefaultCacheManager()
+          .getSingleFile('https://blurha.sh/assets/images/img1.jpg');
       var decodedImage = await decode(await file.readAsBytes());
       yield decodedImage;
-
     } finally {
       await chunkEvents.close();
     }

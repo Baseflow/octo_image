@@ -35,19 +35,6 @@ class OctoSet {
 
   /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
   /// placeholder and [OctoError.icon] as error.
-  factory OctoSet.simple({bool showProgress = false}) {
-    return OctoSet._(
-      placeholderBuilder:
-          showProgress ? null : OctoPlaceholder.circularProgressIndicator(),
-      progressIndicatorBuilder: showProgress
-          ? OctoProgressIndicator.circularProgressIndicator()
-          : null,
-      errorBuilder: OctoError.icon(),
-    );
-  }
-
-  /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
-  /// placeholder and [OctoError.icon] as error.
   factory OctoSet.blurHash(String hash, {BoxFit fit}) {
     return OctoSet._(
       placeholderBuilder: OctoPlaceholder.blurHash(hash, fit: fit),
@@ -67,6 +54,19 @@ class OctoSet {
       imageBuilder: OctoImageTransformer.circleAvatar(),
       errorBuilder:
           OctoError.circleAvatar(backgroundColor: backgroundColor, text: text),
+    );
+  }
+
+  /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
+  /// placeholder and [OctoError.icon] as error.
+  factory OctoSet.circularIndicatorAndIcon({bool showProgress = false}) {
+    return OctoSet._(
+      placeholderBuilder:
+      showProgress ? null : OctoPlaceholder.circularProgressIndicator(),
+      progressIndicatorBuilder: showProgress
+          ? OctoProgressIndicator.circularProgressIndicator()
+          : null,
+      errorBuilder: OctoError.icon(),
     );
   }
 }
