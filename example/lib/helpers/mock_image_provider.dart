@@ -4,7 +4,6 @@ import 'dart:ui' as ui show Codec;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 enum TestUseCase {
   loadAndFail,

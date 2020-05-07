@@ -73,16 +73,15 @@ class OctoImagePage extends StatelessWidget {
     return SizedBox(
       height: 75,
       child: OctoImage.fromSet(
-          fit: BoxFit.cover,
-          image: CachedNetworkImageProvider(
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/1024px-Macaca_nigra_self-portrait_large.jpg',
-          ),
-          octoSet: OctoSet.circleAvatar(
-              backgroundColor: Colors.red,
-              text: Text(
-                "M",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ))),
+        fit: BoxFit.cover,
+        image: CachedNetworkImageProvider(
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/1024px-Macaca_nigra_self-portrait_large.jpg',
+        ),
+        octoSet: OctoSet.circleAvatar(
+          backgroundColor: Colors.red,
+          text: Text("M"),
+        ),
+      ),
     );
   }
 }
