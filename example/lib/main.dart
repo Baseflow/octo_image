@@ -27,7 +27,9 @@ class OctoImagePage extends StatelessWidget {
       body: ListView(
         children: [
           _customImage(),
+          SizedBox(height: 16,),
           _simpleBlur(),
+          SizedBox(height: 16,),
           _circleAvatar(),
         ],
       ),
@@ -69,14 +71,14 @@ class OctoImagePage extends StatelessWidget {
 
   Widget _circleAvatar() {
     return SizedBox(
-      height: 160,
+      height: 75,
       child: OctoImage.fromSet(
           fit: BoxFit.cover,
           image: CachedNetworkImageProvider(
             'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/1024px-Macaca_nigra_self-portrait_large.jpg',
           ),
           octoSet: OctoSet.circleAvatar(
-              backgroundColor: Colors.red, text: Text("T"))),
+              backgroundColor: Colors.red, text: Text("M", style: TextStyle(fontWeight: FontWeight.bold),))),
     );
   }
 }

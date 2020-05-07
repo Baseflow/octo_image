@@ -5,6 +5,9 @@ import 'image_transformers.dart';
 
 /// OctoSets are predefined combinations of a [OctoPlaceholderBuilder],
 /// [OctoProgressIndicatorBuilder], [OctoImageBuilder] and/or [OctoErrorBuilder].
+/// All sets have at least a placeholder or progress indicator and
+/// an error builder.
+///
 /// For example:
 ///     OctoImage.fromSet(
 ///      image: NetworkImage('https://dummyimage.com/600x400/000/fff'),
@@ -32,10 +35,23 @@ class OctoSet {
 
   /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
   /// placeholder and [OctoError.icon] as error.
-  factory OctoSet.simple() {
+  factory OctoSet.simple({bool showProgress = false}) {
     return OctoSet._(
-      placeholderBuilder: OctoPlaceholder.circularProgressIndicator(),
+      placeholderBuilder:
+          showProgress ? null : OctoPlaceholder.circularProgressIndicator(),
+      progressIndicatorBuilder: showProgress
+          ? OctoProgressIndicator.circularProgressIndicator()
+          : null,
       errorBuilder: OctoError.icon(),
+    );
+  }
+
+  /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
+  /// placeholder and [OctoError.icon] as error.
+  factory OctoSet.blurHash(String hash, {BoxFit fit}) {
+    return OctoSet._(
+      placeholderBuilder: OctoPlaceholder.blurHash(hash, fit: fit),
+      errorBuilder: OctoError.blurHash(hash, fit: fit),
     );
   }
 

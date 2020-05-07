@@ -36,4 +36,22 @@ class OctoError {
           ),
         );
   }
+
+  /// Show [OctoPlaceholder.blurHash] with an error icon on top.
+  static OctoErrorBuilder blurHash(String hash, {BoxFit fit}) {
+    return placeholderWithErrorIcon(OctoPlaceholder.blurHash(hash));
+  }
+
+  /// Simple stack that shows an icon over the placeholder with a 50% opacity.
+  static OctoErrorBuilder placeholderWithErrorIcon(
+      OctoPlaceholderBuilder placeholderBuilder, {IconData icon}) {
+    icon ??= Icons.error_outline;
+    return (context, error, stacktrace) => Stack(
+          alignment: Alignment.center,
+          children: [
+            placeholderBuilder(context),
+            Opacity(opacity: 0.75,child: Icon(icon, size: 30,)),
+          ],
+        );
+  }
 }
