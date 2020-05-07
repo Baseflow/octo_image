@@ -7,7 +7,7 @@ Recommended to use with CachedNetworkImage version 2.2.0 or newer.
 ## Getting Started
 The OctoImage widget needs an [ImageProvider](#imageProviders) to show the image. 
 You can either supply the widget with a [placeholder or progress indicator](#placeholders-and-progress-indicators), 
-an [ImageBuilder](image-builders) and/or an [error widget](#error-widgets).
+an [ImageBuilder](#image-builders) and/or an [error widget](#error-widgets).
 
 However, what OctoImage makes is the use of [OctoSets](#octosets). OctoSets are predefined combinations placholders, imagebuilders and error widgets.
 
