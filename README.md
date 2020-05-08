@@ -4,6 +4,8 @@ An image library for showing placeholders, error widgets and transform your imag
 
 Recommended to use with [CachedNetworkImage](https://pub.dev/packages/cached_network_image) version 2.2.0 or newer.
 
+<img src="resources/set-demo.gif" class="center"/>
+
 ## Getting Started
 The OctoImage widget needs an [ImageProvider](#imageProviders) to show the image. 
 You can either supply the widget with a [placeholder or progress indicator](#placeholders-and-progress-indicators), 
@@ -157,8 +159,6 @@ All included image transformers are:
 |circleAvatar|Clips the image in a circle|
 
 ## OctoSets
-<img src="resources/set-demo.gif"/>
-
 You get the most out of OctoImage when you use OctoSets. These sets contain a combination of a placeholder or progress indicator,
 an image builder and/or an error widget builder. It always contains at least a placeholder or progress indicator and an error widget.
 
