@@ -2,7 +2,7 @@
 
 An image library for showing placeholders, error widgets and transform your image.
 
-Recommended to use with CachedNetworkImage version 2.2.0 or newer.
+Recommended to use with [CachedNetworkImage](https://pub.dev/packages/cached_network_image) version 2.2.0 or newer.
 
 ## Getting Started
 The OctoImage widget needs an [ImageProvider](#imageProviders) to show the image. 

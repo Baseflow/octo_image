@@ -35,7 +35,11 @@ class OctoSet {
 
   /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
   /// placeholder and [OctoError.icon] as error.
-  factory OctoSet.blurHash(String hash, {BoxFit fit}) {
+  factory OctoSet.blurHash(
+    String hash, {
+    BoxFit fit,
+    Text errorMessage,
+  }) {
     return OctoSet._(
       placeholderBuilder: OctoPlaceholder.blurHash(hash, fit: fit),
       errorBuilder: OctoError.blurHash(hash, fit: fit),
@@ -62,7 +66,7 @@ class OctoSet {
   factory OctoSet.circularIndicatorAndIcon({bool showProgress = false}) {
     return OctoSet._(
       placeholderBuilder:
-      showProgress ? null : OctoPlaceholder.circularProgressIndicator(),
+          showProgress ? null : OctoPlaceholder.circularProgressIndicator(),
       progressIndicatorBuilder: showProgress
           ? OctoProgressIndicator.circularProgressIndicator()
           : null,
