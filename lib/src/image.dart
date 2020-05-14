@@ -125,9 +125,6 @@ class OctoImage extends StatefulWidget {
   /// scope.
   final bool matchTextDirection;
 
-  /// Optional headers for the http request of the image url
-  final Map<String, String> httpHeaders;
-
   /// If non-null, this color is blended with each image pixel using
   /// [colorBlendMode].
   final Color color;
@@ -194,22 +191,21 @@ class OctoImage extends StatefulWidget {
     this.placeholderBuilder,
     this.progressIndicatorBuilder,
     this.errorBuilder,
-    this.fadeOutDuration = const Duration(milliseconds: 1000),
-    this.fadeOutCurve = Curves.easeOut,
-    this.fadeInDuration = const Duration(milliseconds: 500),
-    this.fadeInCurve = Curves.easeIn,
+    Duration fadeOutDuration,
+    Curve fadeOutCurve,
+    Duration fadeInDuration,
+    Curve fadeInCurve,
     this.width,
     this.height,
     this.fit,
-    this.alignment = Alignment.center,
-    this.repeat = ImageRepeat.noRepeat,
-    this.matchTextDirection = false,
-    this.httpHeaders,
+    Alignment alignment,
+    ImageRepeat repeat,
+    bool matchTextDirection,
     this.color,
-    this.filterQuality = FilterQuality.low,
+    FilterQuality filterQuality,
     this.colorBlendMode,
-    this.placeholderFadeInDuration = Duration.zero,
-    this.gaplessPlayback = false,
+    Duration placeholderFadeInDuration,
+    bool gaplessPlayback,
     int memCacheWidth,
     int memCacheHeight,
   })  : image = ResizeImage.resizeIfNeeded(
@@ -217,14 +213,16 @@ class OctoImage extends StatefulWidget {
           memCacheHeight,
           image,
         ),
-        assert(fadeOutDuration != null),
-        assert(fadeOutCurve != null),
-        assert(fadeInDuration != null),
-        assert(fadeInCurve != null),
-        assert(alignment != null),
-        assert(filterQuality != null),
-        assert(repeat != null),
-        assert(matchTextDirection != null),
+        fadeOutDuration = fadeOutDuration ?? const Duration(milliseconds: 1000),
+        fadeOutCurve = fadeOutCurve ?? Curves.easeOut,
+        fadeInDuration = fadeInDuration ?? const Duration(milliseconds: 500),
+        fadeInCurve = fadeInCurve ?? Curves.easeIn,
+        alignment = alignment ?? Alignment.center,
+        repeat = repeat ?? ImageRepeat.noRepeat,
+        matchTextDirection = matchTextDirection ?? false,
+        filterQuality = filterQuality ?? FilterQuality.low,
+        placeholderFadeInDuration = placeholderFadeInDuration ?? Duration.zero,
+        gaplessPlayback = gaplessPlayback ?? false,
         super(key: key);
 
   /// Creates an OctoWidget that displays an image with a predefined [OctoSet].
@@ -260,22 +258,21 @@ class OctoImage extends StatefulWidget {
     Key key,
     @required image,
     @required OctoSet octoSet,
-    this.fadeOutDuration = const Duration(milliseconds: 1000),
-    this.fadeOutCurve = Curves.easeOut,
-    this.fadeInDuration = const Duration(milliseconds: 500),
-    this.fadeInCurve = Curves.easeIn,
+    Duration fadeOutDuration,
+    Curve fadeOutCurve,
+    Duration fadeInDuration,
+    Curve fadeInCurve,
     this.width,
     this.height,
     this.fit,
-    this.alignment = Alignment.center,
-    this.repeat = ImageRepeat.noRepeat,
-    this.matchTextDirection = false,
-    this.httpHeaders,
+    Alignment alignment,
+    ImageRepeat repeat,
+    bool matchTextDirection,
     this.color,
-    this.filterQuality = FilterQuality.low,
+    FilterQuality filterQuality,
     this.colorBlendMode,
-    this.placeholderFadeInDuration = Duration.zero,
-    this.gaplessPlayback = false,
+    Duration placeholderFadeInDuration,
+    bool gaplessPlayback,
     int memCacheWidth,
     int memCacheHeight,
   })  : image = ResizeImage.resizeIfNeeded(
@@ -288,14 +285,16 @@ class OctoImage extends StatefulWidget {
         placeholderBuilder = octoSet.placeholderBuilder,
         progressIndicatorBuilder = octoSet.progressIndicatorBuilder,
         errorBuilder = octoSet.errorBuilder,
-        assert(fadeOutDuration != null),
-        assert(fadeOutCurve != null),
-        assert(fadeInDuration != null),
-        assert(fadeInCurve != null),
-        assert(alignment != null),
-        assert(filterQuality != null),
-        assert(repeat != null),
-        assert(matchTextDirection != null),
+        fadeOutDuration = fadeOutDuration ?? const Duration(milliseconds: 1000),
+        fadeOutCurve = fadeOutCurve ?? Curves.easeOut,
+        fadeInDuration = fadeInDuration ?? const Duration(milliseconds: 500),
+        fadeInCurve = fadeInCurve ?? Curves.easeIn,
+        alignment = alignment ?? Alignment.center,
+        repeat = repeat ?? ImageRepeat.noRepeat,
+        matchTextDirection = matchTextDirection ?? false,
+        filterQuality = filterQuality ?? FilterQuality.low,
+        placeholderFadeInDuration = placeholderFadeInDuration ?? Duration.zero,
+        gaplessPlayback = gaplessPlayback ?? false,
         super(key: key);
 
   @override
@@ -308,7 +307,7 @@ class _OctoImageState extends State<OctoImage> {
   @override
   void didUpdateWidget(OctoImage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if(!widget.gaplessPlayback && oldWidget.image != widget.image){
+    if (!widget.gaplessPlayback && oldWidget.image != widget.image) {
       _isImageResolved = false;
     }
     super.didChangeDependencies();
@@ -463,7 +462,7 @@ class _OctoImageState extends State<OctoImage> {
     assert(widget.placeholderBuilder == null ||
         widget.progressIndicatorBuilder == null);
 
-    if(_isImageResolved) return _PlaceholderType.none;
+    if (_isImageResolved) return _PlaceholderType.none;
 
     if (widget.placeholderBuilder != null) return _PlaceholderType.static;
     if (widget.progressIndicatorBuilder != null) {
