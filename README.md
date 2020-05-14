@@ -1,16 +1,14 @@
 # OctoImage
 
+[![pub package](https://img.shields.io/pub/v/octo_image.svg)](https://pub.dartlang.org/packages/octo_image) 
+[![Build Status](https://app.bitrise.io/app/151357c29b430916/status.svg?token=U1ggYfh_wrBR0l5elPwryQ&branch=master)](https://app.bitrise.io/app/151357c29b430916)
+[![codecov](https://codecov.io/gh/Baseflow/octo_image/branch/master/graph/badge.svg)](https://codecov.io/gh/Baseflow/octo_image)
+
 An image library for showing placeholders, error widgets and transform your image.
 
 Recommended to use with [CachedNetworkImage](https://pub.dev/packages/cached_network_image) version 2.2.0 or newer.
 
 <img src="https://raw.githubusercontent.com/Baseflow/octo_image/develop/resources/set-demo.gif" class="center"/>
-
-# Support
-
-* Feel free to open an issue. Make sure to use one of the templates!
-* Commercial support is available. Integration with your app or services, samples, feature request, etc. Email: [hello@baseflow.com](mailto:hello@baseflow.com)
-* Powered by: [baseflow.com](https://baseflow.com)
 
 ## Getting Started
 The OctoImage widget needs an [ImageProvider](#imageProviders) to show the image. 
@@ -184,5 +182,14 @@ All included OctoSets are:
 |circleAvatar|Shows a colored circle with text during load and error. Clips the image after successful load.|
 |circularIndicatorAndIcon|Shows a circularProgressIndicator with or without progress and an icon on error.|
 
-## Contribute
-PR's with any new prebuild widgets or sets are highly appreciated. Of course issues and other PRs as well.
+# Contribute
+
+If you would like to contribute to the plugin (e.g. by improving the documentation, solving a bug or adding a cool new feature), please carefully review our [contribution guide](CONTRIBUTING.md) and send us your [pull request](https://github.com/Baseflow/octo_image/pulls).
+
+PR's with any new prebuild widgets or sets are highly appreciated.
+
+# Support
+
+* Feel free to open an issue. Make sure to use one of the templates!
+* Commercial support is available. Integration with your app or services, samples, feature request, etc. Email: [hello@baseflow.com](mailto:hello@baseflow.com)
+* Powered by: [baseflow.com](https://baseflow.com)
