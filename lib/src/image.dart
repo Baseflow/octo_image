@@ -148,6 +148,10 @@ class OctoImage extends StatefulWidget {
   /// If not given a value, defaults to FilterQuality.low.
   final FilterQuality filterQuality;
 
+  /// Whether to continue showing the old image (true), or briefly show the
+  /// placeholder (false), when the image provider changes.
+  final bool gaplessPlayback;
+
   /// Creates an OctoWidget that displays an image. The [image] is an
   /// ImageProvider and the OctoImage should work with any [ImageProvider].
   /// The widget is optimized for [CachedNetworkImageProvider](https://pub.dev/packages/cached_network_image) or
@@ -205,6 +209,7 @@ class OctoImage extends StatefulWidget {
     this.filterQuality = FilterQuality.low,
     this.colorBlendMode,
     this.placeholderFadeInDuration = Duration.zero,
+    this.gaplessPlayback = false,
     int memCacheWidth,
     int memCacheHeight,
   })  : image = ResizeImage.resizeIfNeeded(
@@ -270,6 +275,7 @@ class OctoImage extends StatefulWidget {
     this.filterQuality = FilterQuality.low,
     this.colorBlendMode,
     this.placeholderFadeInDuration = Duration.zero,
+    this.gaplessPlayback = false,
     int memCacheWidth,
     int memCacheHeight,
   })  : image = ResizeImage.resizeIfNeeded(
@@ -297,6 +303,17 @@ class OctoImage extends StatefulWidget {
 }
 
 class _OctoImageState extends State<OctoImage> {
+  bool _isImageResolved = false;
+
+  @override
+  void didUpdateWidget(OctoImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(!widget.gaplessPlayback && oldWidget.image != widget.image){
+      _isImageResolved = false;
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     var placeholderType = _definePlaceholderType();
@@ -329,6 +346,7 @@ class _OctoImageState extends State<OctoImage> {
       colorBlendMode: widget.colorBlendMode,
       matchTextDirection: widget.matchTextDirection,
       filterQuality: widget.filterQuality,
+      gaplessPlayback: widget.gaplessPlayback,
     );
   }
 
@@ -415,6 +433,7 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   Widget _image(BuildContext context, Widget child) {
+    _isImageResolved = true;
     if (widget.imageBuilder != null) {
       return widget.imageBuilder(context, child);
     }
@@ -443,6 +462,8 @@ class _OctoImageState extends State<OctoImage> {
   _PlaceholderType _definePlaceholderType() {
     assert(widget.placeholderBuilder == null ||
         widget.progressIndicatorBuilder == null);
+
+    if(_isImageResolved) return _PlaceholderType.none;
 
     if (widget.placeholderBuilder != null) return _PlaceholderType.static;
     if (widget.progressIndicatorBuilder != null) {
