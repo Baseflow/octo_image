@@ -6,6 +6,12 @@ Recommended to use with [CachedNetworkImage](https://pub.dev/packages/cached_net
 
 <img src="https://raw.githubusercontent.com/Baseflow/octo_image/develop/resources/set-demo.gif" class="center"/>
 
+# Support
+
+* Feel free to open an issue. Make sure to use one of the templates!
+* Commercial support is available. Integration with your app or services, samples, feature request, etc. Email: [hello@baseflow.com](mailto:hello@baseflow.com)
+* Powered by: [baseflow.com](https://baseflow.com)
+
 ## Getting Started
 The OctoImage widget needs an [ImageProvider](#imageProviders) to show the image. 
 You can either supply the widget with a [placeholder or progress indicator](#placeholders-and-progress-indicators), 
