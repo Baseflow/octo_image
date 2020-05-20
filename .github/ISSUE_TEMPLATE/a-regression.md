@@ -21,8 +21,3 @@ about: Report unexpected behavior that worked previously
 **Platform:** 
 - [ ] :iphone: iOS
 - [ ] :robot: Android
-- [ ] :checkered_flag: WPF
-- [ ] :earth_americas: UWP
-- [ ] :apple: MacOS
-- [ ] :tv: tvOS
-- [ ] :monkey: Xamarin.Forms

@@ -19,8 +19,3 @@ about: Create a report to help us fix bugs and make improvements
 **Platform:** 
 - [ ] :iphone: iOS
 - [ ] :robot: Android
-- [ ] :checkered_flag: WPF
-- [ ] :earth_americas: UWP
-- [ ] :apple: MacOS
-- [ ] :tv: tvOS
-- [ ] :monkey: Xamarin.Forms

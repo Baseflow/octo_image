@@ -17,8 +17,3 @@ about: Want to see something new included in the Framework? Submit it!
 ### Platforms affected (mark all that apply)
 - [ ] :iphone: iOS
 - [ ] :robot: Android
-- [ ] :checkered_flag: WPF
-- [ ] :earth_americas: UWP
-- [ ] :apple: MacOS
-- [ ] :tv: tvOS
-- [ ] :monkey: Xamarin.Forms

@@ -15,8 +15,3 @@ about: Proposals for code cleanup, refactor and improvements in general
 ### Platforms affected (mark all that apply)
 - [ ] :iphone: iOS
 - [ ] :robot: Android
-- [ ] :checkered_flag: WPF
-- [ ] :earth_americas: UWP
-- [ ] :apple: MacOS
-- [ ] :tv: tvOS
-- [ ] :monkey: Xamarin.Forms
