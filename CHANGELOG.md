@@ -1,3 +1,6 @@
+## [0.1.1] - 2020-05-20
+* Update dependency for blurHash
+
 ## [0.1.0] - 2020-05-14
 
 * Removed headers as they are not used for anything
