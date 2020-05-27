@@ -310,7 +310,6 @@ class _OctoImageState extends State<OctoImage> {
     if (!widget.gaplessPlayback && oldWidget.image != widget.image) {
       _isImageResolved = false;
     }
-    super.didChangeDependencies();
   }
 
   @override
