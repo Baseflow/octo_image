@@ -308,8 +308,8 @@ class _OctoImageState extends State<OctoImage> {
   @override
   void didUpdateWidget(OctoImage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if(oldWidget.image != widget.image){
-      if(widget.gaplessPlayback && _resolvedImage != null){
+    if (oldWidget.image != widget.image) {
+      if (widget.gaplessPlayback && _resolvedImage != null) {
         _previousImage = _resolvedImage;
       }
       _resolvedImage = null;
@@ -436,7 +436,7 @@ class _OctoImageState extends State<OctoImage> {
   Widget _image(BuildContext context, Widget child) {
     if (widget.imageBuilder != null) {
       _resolvedImage = widget.imageBuilder(context, child);
-    }else{
+    } else {
       _resolvedImage = child;
     }
     return _resolvedImage;
@@ -455,7 +455,7 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   Widget _placeholder(BuildContext context) {
-    if(_previousImage != null) return _previousImage;
+    if (_previousImage != null) return _previousImage;
 
     if (widget.placeholderBuilder != null) {
       return Center(child: widget.placeholderBuilder(context));
