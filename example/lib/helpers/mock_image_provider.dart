@@ -1,5 +1,7 @@
 import 'dart:async' show Future, StreamController;
+import 'dart:typed_data';
 import 'dart:ui' as ui show Codec;
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -58,9 +60,16 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
       if (fail) {
         throw Exception("Image loading failed");
       }
-      var file = await DefaultCacheManager()
-          .getSingleFile('https://blurha.sh/assets/images/img1.jpg');
-      var decodedImage = await decode(await file.readAsBytes());
+      var url = 'https://blurha.sh/assets/images/img1.jpg';
+      Uint8List imageBytes;
+      if(kIsWeb) {
+        imageBytes = (await http.get(url)).bodyBytes;
+      }else {
+        var file = await DefaultCacheManager()
+            .getSingleFile(url);
+        imageBytes = await file.readAsBytes();
+      }
+      var decodedImage = await decode(imageBytes);
       yield decodedImage;
     } finally {
       await chunkEvents.close();
