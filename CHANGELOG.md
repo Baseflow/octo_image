@@ -1,3 +1,6 @@
+## [0.2.0] - 2020-05-28
+* Made gaplessPlayback fade from one image to the next
+
 ## [0.1.1] - 2020-05-20
 * Update dependency for blurHash
 
