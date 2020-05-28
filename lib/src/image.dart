@@ -302,13 +302,17 @@ class OctoImage extends StatefulWidget {
 }
 
 class _OctoImageState extends State<OctoImage> {
-  bool _isImageResolved = false;
+  Widget _previousImage;
+  Widget _resolvedImage;
 
   @override
   void didUpdateWidget(OctoImage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!widget.gaplessPlayback && oldWidget.image != widget.image) {
-      _isImageResolved = false;
+    if (oldWidget.image != widget.image) {
+      if (widget.gaplessPlayback && _resolvedImage != null) {
+        _previousImage = _resolvedImage;
+      }
+      _resolvedImage = null;
     }
   }
 
@@ -344,7 +348,6 @@ class _OctoImageState extends State<OctoImage> {
       colorBlendMode: widget.colorBlendMode,
       matchTextDirection: widget.matchTextDirection,
       filterQuality: widget.filterQuality,
-      gaplessPlayback: widget.gaplessPlayback,
     );
   }
 
@@ -431,11 +434,12 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   Widget _image(BuildContext context, Widget child) {
-    _isImageResolved = true;
     if (widget.imageBuilder != null) {
-      return widget.imageBuilder(context, child);
+      _resolvedImage = widget.imageBuilder(context, child);
+    } else {
+      _resolvedImage = child;
     }
-    return child;
+    return _resolvedImage;
   }
 
   Widget _errorBuilder(context, error, stacktrace) {
@@ -451,6 +455,8 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   Widget _placeholder(BuildContext context) {
+    if (_previousImage != null) return _previousImage;
+
     if (widget.placeholderBuilder != null) {
       return Center(child: widget.placeholderBuilder(context));
     }
@@ -461,8 +467,7 @@ class _OctoImageState extends State<OctoImage> {
     assert(widget.placeholderBuilder == null ||
         widget.progressIndicatorBuilder == null);
 
-    if (_isImageResolved) return _PlaceholderType.none;
-
+    if (_previousImage != null) return _PlaceholderType.static;
     if (widget.placeholderBuilder != null) return _PlaceholderType.static;
     if (widget.progressIndicatorBuilder != null) {
       return _PlaceholderType.progress;
