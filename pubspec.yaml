@@ -1,6 +1,6 @@
 name: octo_image
 description: A multifunctional Flutter image widget. Supports placeholders, error widgets and image transformers with fading.
-version: 0.2.0
+version: 0.2.1
 homepage: https://github.com/Baseflow/octo_image
 
 environment:

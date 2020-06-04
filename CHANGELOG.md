@@ -1,3 +1,6 @@
+## [0.2.1] - 2020-06-04
+* Make whole widget, including placeholder and error widgets, adhere to the height and width set.
+
 ## [0.2.0] - 2020-05-28
 * Made gaplessPlayback fade from one image to the next
 
