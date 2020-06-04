@@ -333,21 +333,26 @@ class _OctoImageState extends State<OctoImage> {
         break;
     }
 
-    return Image(
-      image: widget.image,
-      loadingBuilder:
-          placeholderType == _PlaceholderType.progress ? _loadingBuilder : null,
-      frameBuilder: frameBuilder,
-      errorBuilder: widget.errorBuilder != null ? _errorBuilder : null,
-      fit: widget.fit,
+    return SizedBox(
       width: widget.width,
       height: widget.height,
-      alignment: widget.alignment,
-      repeat: widget.repeat,
-      color: widget.color,
-      colorBlendMode: widget.colorBlendMode,
-      matchTextDirection: widget.matchTextDirection,
-      filterQuality: widget.filterQuality,
+      child: Image(
+        image: widget.image,
+        loadingBuilder: placeholderType == _PlaceholderType.progress
+            ? _loadingBuilder
+            : null,
+        frameBuilder: frameBuilder,
+        errorBuilder: widget.errorBuilder != null ? _errorBuilder : null,
+        fit: widget.fit,
+        width: widget.width,
+        height: widget.height,
+        alignment: widget.alignment,
+        repeat: widget.repeat,
+        color: widget.color,
+        colorBlendMode: widget.colorBlendMode,
+        matchTextDirection: widget.matchTextDirection,
+        filterQuality: widget.filterQuality,
+      ),
     );
   }
 
