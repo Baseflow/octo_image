@@ -11,10 +11,20 @@ import '../octo_image.dart';
 ///    );
 class OctoError {
   /// Show [OctoPlaceholder.blurHash] with an error icon on top.
-  static OctoErrorBuilder blurHash(String hash, {BoxFit fit, Text message}) {
+  static OctoErrorBuilder blurHash(
+    String hash, {
+    BoxFit fit,
+    Text message,
+    IconData icon,
+    Color iconColor,
+    double iconSize,
+  }) {
     return placeholderWithErrorIcon(
       OctoPlaceholder.blurHash(hash, fit: fit),
       message: message,
+      icon: icon,
+      iconColor: iconColor,
+      iconSize: iconSize,
     );
   }
 
@@ -49,9 +59,13 @@ class OctoError {
   static OctoErrorBuilder placeholderWithErrorIcon(
     OctoPlaceholderBuilder placeholderBuilder, {
     IconData icon,
+    Color iconColor,
+    double iconSize,
     Text message,
   }) {
     icon ??= Icons.error_outline;
+    iconColor ??= Colors.black;
+    iconSize ??= 30.0;
     return (context, error, stacktrace) => Stack(
           alignment: Alignment.center,
           children: [
@@ -60,7 +74,8 @@ class OctoError {
                 opacity: 0.75,
                 child: Icon(
                   icon,
-                  size: 30,
+                  size: iconSize,
+                  color: iconColor,
                 )),
             if (message != null)
               Align(
