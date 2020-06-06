@@ -11,6 +11,8 @@ import '../octo_image.dart';
 ///    );
 class OctoError {
   /// Show [OctoPlaceholder.blurHash] with an error icon on top.
+  /// Error icon can be modified along with its size and color.
+  /// By default icon color will be the value given by the current [IconTheme].
   static OctoErrorBuilder blurHash(
     String hash, {
     BoxFit fit,
@@ -64,7 +66,6 @@ class OctoError {
     Text message,
   }) {
     icon ??= Icons.error_outline;
-    iconColor ??= Colors.black;
     iconSize ??= 30.0;
     return (context, error, stacktrace) => Stack(
           alignment: Alignment.center,
