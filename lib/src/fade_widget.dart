@@ -76,9 +76,7 @@ class _FadeWidgetState extends State<FadeWidget>
 
   @override
   void dispose() {
-    if (widget.direction == AnimationDirection.reverse) {
-      opacity.removeStatusListener(animationStatusChange);
-    }
+    opacity.removeStatusListener(animationStatusChange);
     controller.dispose();
     super.dispose();
   }
