@@ -448,22 +448,19 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   Widget _errorBuilder(context, error, stacktrace) {
-    return Center(
-      child: widget.errorBuilder(context, error, stacktrace),
-    );
+    return widget.errorBuilder(context, error, stacktrace);
   }
 
   Widget _progressIndicator(
       BuildContext context, ImageChunkEvent loadingProgress) {
-    return Center(
-        child: widget.progressIndicatorBuilder(context, loadingProgress));
+    return widget.progressIndicatorBuilder(context, loadingProgress);
   }
 
   Widget _placeholder(BuildContext context) {
     if (_previousImage != null) return _previousImage;
 
     if (widget.placeholderBuilder != null) {
-      return Center(child: widget.placeholderBuilder(context));
+      return widget.placeholderBuilder(context);
     }
     return Container();
   }
