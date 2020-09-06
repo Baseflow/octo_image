@@ -16,7 +16,7 @@ class OctoProgressIndicator {
       if (progress != null && progress.expectedTotalBytes != null) {
         value = progress.cumulativeBytesLoaded / progress.expectedTotalBytes;
       }
-      return CircularProgressIndicator(value: value);
+      return Center(child: CircularProgressIndicator(value: value));
     };
   }
 }
