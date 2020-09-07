@@ -1,3 +1,7 @@
+## [0.3.0] - 2020-09-07
+* Fixed bug when fitting placeholders or error widgets.
+* BREAKING: Doesn't automatically center placeholders and error widgets anymore.
+
 ## [0.2.1] - 2020-06-04
 * Make whole widget, including placeholder and error widgets, adhere to the height and width set.
 
