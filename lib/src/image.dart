@@ -417,6 +417,9 @@ class _OctoImageState extends State<OctoImage> {
 
   Widget _loadingBuilder(
       BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+    if(loadingProgress == null) {
+      return SizedBox();
+    }
     if (_isLoaded) {
       if (_wasSynchronouslyLoaded) {
         return _image(context, child);
