@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
 
@@ -40,7 +39,7 @@ class OctoImagePage extends StatelessWidget {
     return SizedBox(
       height: 150,
       child: OctoImage(
-        image: CachedNetworkImageProvider('https://via.placeholder.com/150'),
+        image: NetworkImage('https://via.placeholder.com/150'),
         progressIndicatorBuilder: (context, progress) {
           double? value;
           var expectedBytes = progress?.expectedTotalBytes;
@@ -59,7 +58,7 @@ class OctoImagePage extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 269 / 173,
       child: OctoImage(
-        image: CachedNetworkImageProvider(
+        image: NetworkImage(
             'https://blurha.sh/assets/images/img1.jpg'),
         placeholderBuilder: OctoPlaceholder.blurHash(
           'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
@@ -75,7 +74,7 @@ class OctoImagePage extends StatelessWidget {
       height: 75,
       child: OctoImage.fromSet(
         fit: BoxFit.cover,
-        image: CachedNetworkImageProvider(
+        image: NetworkImage(
           'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/1024px-Macaca_nigra_self-portrait_large.jpg',
         ),
         octoSet: OctoSet.circleAvatar(

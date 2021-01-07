@@ -8,10 +8,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cached_network_image: ^2.2.0
   octo_image:
     path: ../
-  flutter_cache_manager: ^1.2.2
+  http: ^0.12.2
 
 dev_dependencies:
   flutter_test:
