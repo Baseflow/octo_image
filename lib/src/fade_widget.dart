@@ -26,15 +26,12 @@ class FadeWidget extends StatefulWidget {
   /// Fading [child] in or out depending on [direction] with a [curve] and
   /// [duration]./
   const FadeWidget(
-      {@required this.child,
+      {required this.child,
       this.duration = const Duration(milliseconds: 800),
       this.direction = AnimationDirection.forward,
       this.curve = Curves.easeOut,
-      Key key})
-      : assert(duration != null),
-        assert(curve != null),
-        assert(child != null),
-        super(key: key);
+      Key? key})
+      : super(key: key);
 
   @override
   _FadeWidgetState createState() => _FadeWidgetState();
@@ -42,9 +39,9 @@ class FadeWidget extends StatefulWidget {
 
 class _FadeWidgetState extends State<FadeWidget>
     with SingleTickerProviderStateMixin {
-  Animation<double> opacity;
-  AnimationController controller;
-  bool hideWidget;
+  late Animation<double> opacity;
+  late AnimationController controller;
+  late bool hideWidget;
 
   @override
   Widget build(BuildContext context) {

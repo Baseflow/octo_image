@@ -4,15 +4,21 @@ version: 0.3.0
 homepage: https://github.com/Baseflow/octo_image
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0-133.2.beta <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_blurhash: ">=0.4.1 <0.6.0"
+  flutter_blurhash:
+    git:
+      url: https://github.com/fluttercommunity/flutter_blurhash
+      ref: 5388cc1407b7b202737f78b23898317cebf113ab
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  effective_dart: ^1.2.0
-  transparent_image: ^1.0.0
+  pedantic: ^1.10.0-nullsafety.3
+  transparent_image:
+    git:
+      url: https://github.com/renefloor/transparent_image/
+      ref: feature/nnbd

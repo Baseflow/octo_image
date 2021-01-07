@@ -17,7 +17,7 @@ enum TestUseCase {
 class MockImageProvider extends ImageProvider<MockImageProvider> {
   final _timeStamp = DateTime.now().millisecondsSinceEpoch;
   MockImageProvider({
-    @required this.useCase,
+    required this.useCase,
   });
 
   final TestUseCase useCase;

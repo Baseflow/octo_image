@@ -12,9 +12,9 @@ class OctoProgressIndicator {
   /// Default [CircularProgressIndicator] with progress if available.
   static OctoProgressIndicatorBuilder circularProgressIndicator() {
     return (context, progress) {
-      double value;
+      double? value;
       if (progress != null && progress.expectedTotalBytes != null) {
-        value = progress.cumulativeBytesLoaded / progress.expectedTotalBytes;
+        value = progress.cumulativeBytesLoaded / progress.expectedTotalBytes!;
       }
       return Center(child: CircularProgressIndicator(value: value));
     };

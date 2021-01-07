@@ -42,10 +42,11 @@ class OctoImagePage extends StatelessWidget {
       child: OctoImage(
         image: CachedNetworkImageProvider('https://via.placeholder.com/150'),
         progressIndicatorBuilder: (context, progress) {
-          double value;
-          if (progress != null && progress.expectedTotalBytes != null) {
+          double? value;
+          var expectedBytes = progress?.expectedTotalBytes;
+          if (progress != null && expectedBytes != null) {
             value =
-                progress.cumulativeBytesLoaded / progress.expectedTotalBytes;
+                progress.cumulativeBytesLoaded / expectedBytes;
           }
           return CircularProgressIndicator(value: value);
         },

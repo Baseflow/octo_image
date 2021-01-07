@@ -91,23 +91,23 @@ void main() {
 
 class MyWidget extends StatelessWidget {
   final TestUseCase useCase;
-  final OctoProgressIndicatorBuilder progressBuilder;
-  final OctoPlaceholderBuilder placeholderBuilder;
-  final OctoErrorBuilder errorBuilder;
+  final OctoProgressIndicatorBuilder? progressBuilder;
+  final OctoPlaceholderBuilder? placeholderBuilder;
+  final OctoErrorBuilder? errorBuilder;
 
   MyWidget({
-    Key key,
-    @required this.useCase,
-    VoidCallback onProgress,
-    VoidCallback onPlaceHolder,
-    VoidCallback onError,
+    Key? key,
+    required this.useCase,
+    VoidCallback? onProgress,
+    VoidCallback? onPlaceHolder,
+    VoidCallback? onError,
   })  : progressBuilder = getProgress(onProgress),
         placeholderBuilder = getPlaceholder(onPlaceHolder),
         errorBuilder = getErrorBuilder(onError),
         super(key: key);
 
 
-  static OctoProgressIndicatorBuilder getProgress(VoidCallback onProgress) {
+  static OctoProgressIndicatorBuilder? getProgress(VoidCallback? onProgress) {
     if (onProgress == null) return null;
     return (context, progress) {
       onProgress();
@@ -116,7 +116,7 @@ class MyWidget extends StatelessWidget {
   }
 
 
-  static OctoPlaceholderBuilder getPlaceholder(VoidCallback onPlaceHolder) {
+  static OctoPlaceholderBuilder? getPlaceholder(VoidCallback? onPlaceHolder) {
     if (onPlaceHolder == null) return null;
     return (context) {
       onPlaceHolder();
@@ -124,7 +124,7 @@ class MyWidget extends StatelessWidget {
     };
   }
 
-  static OctoErrorBuilder getErrorBuilder(VoidCallback onError) {
+  static OctoErrorBuilder? getErrorBuilder(VoidCallback? onError) {
     if (onError == null) return null;
     return (context, error, stacktrace) {
       onError();

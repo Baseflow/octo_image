@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
 
 class OctoImagePage extends StatelessWidget {
   final List<OctoSet> sets;
-  const OctoImagePage({Key key, this.sets}) : super(key: key);
+  const OctoImagePage({Key? key, required this.sets}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
