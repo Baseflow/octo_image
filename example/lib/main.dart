@@ -27,7 +27,7 @@ class OctoImagePage extends StatelessWidget {
         children: [
           _customImage(),
           SizedBox(height: 16),
-          _simpleBlur(),
+          // _simpleBlur(),
           SizedBox(height: 16),
           _circleAvatar(),
         ],
@@ -54,20 +54,20 @@ class OctoImagePage extends StatelessWidget {
     );
   }
 
-  Widget _simpleBlur() {
-    return AspectRatio(
-      aspectRatio: 269 / 173,
-      child: OctoImage(
-        image: NetworkImage(
-            'https://blurha.sh/assets/images/img1.jpg'),
-        placeholderBuilder: OctoPlaceholder.blurHash(
-          'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-        ),
-        errorBuilder: OctoError.icon(color: Colors.red),
-        fit: BoxFit.cover,
-      ),
-    );
-  }
+  // Widget _simpleBlur() {
+  //   return AspectRatio(
+  //     aspectRatio: 269 / 173,
+  //     child: OctoImage(
+  //       image: NetworkImage(
+  //           'https://blurha.sh/assets/images/img1.jpg'),
+  //       placeholderBuilder: OctoPlaceholder.blurHash(
+  //         'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
+  //       ),
+  //       errorBuilder: OctoError.icon(color: Colors.red),
+  //       fit: BoxFit.cover,
+  //     ),
+  //   );
+  // }
 
   Widget _circleAvatar() {
     return SizedBox(

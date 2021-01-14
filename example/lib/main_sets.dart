@@ -14,9 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       home: OctoImagePage(
         sets: <OctoSet>[
-          OctoSet.blurHash(
-            'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-          ),
+          // OctoSet.blurHash('LEHV6nWB2yk8pyo0adR*.7kCMdnj'),
           OctoSet.circleAvatar(
             backgroundColor: Colors.red,
             text: Text(
@@ -34,7 +32,9 @@ class MyApp extends StatelessWidget {
 
 class OctoImagePage extends StatelessWidget {
   final List<OctoSet> sets;
+
   const OctoImagePage({Key? key, required this.sets}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

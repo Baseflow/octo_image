@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blurhash/flutter_blurhash.dart';
 
 import '../octo_image.dart';
 
@@ -10,6 +9,7 @@ import '../octo_image.dart';
 ///      placeholderBuilder: OctoPlaceholder.circularProgressIndicator(),
 ///    );
 class OctoPlaceholder {
+  /* Disabled until BlurHash has a released NNBD version
   /// Use [BlurHash](https://pub.dev/packages/flutter_blurhash) as a placeholder.
   /// The hash should be made server side. See [blurha.sh](https://blurha.sh/) for more information.
   /// [fit] defaults to [BoxFit.cover].
@@ -21,6 +21,7 @@ class OctoPlaceholder {
           ),
         );
   }
+   */
 
   /// Displays a [CircleAvatar] as placeholder
   static OctoPlaceholderBuilder circleAvatar({

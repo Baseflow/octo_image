@@ -55,15 +55,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_blurhash:
-    dependency: transitive
-    description:
-      path: "."
-      ref: "5388cc1407b7b202737f78b23898317cebf113ab"
-      resolved-ref: "5388cc1407b7b202737f78b23898317cebf113ab"
-      url: "https://github.com/fluttercommunity/flutter_blurhash"
-    source: git
-    version: "0.5.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

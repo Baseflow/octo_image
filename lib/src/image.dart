@@ -341,9 +341,7 @@ class _OctoImageState extends State<OctoImage> {
             ? _loadingBuilder
             : null,
         frameBuilder: frameBuilder,
-        errorBuilder: widget.errorBuilder != null
-            ? _errorBuilder
-            : null,
+        errorBuilder: widget.errorBuilder != null ? _errorBuilder : null,
         fit: widget.fit,
         width: widget.width,
         height: widget.height,
@@ -466,7 +464,8 @@ class _OctoImageState extends State<OctoImage> {
       BuildContext context, ImageChunkEvent? loadingProgress) {
     var progressIndicatorBuilder = widget.progressIndicatorBuilder;
     if (progressIndicatorBuilder == null) {
-      throw StateError('Try to build progressIndicatorBuilder with progressIndicatorBuilder null');
+      throw StateError(
+          'Try to build progressIndicatorBuilder with progressIndicatorBuilder null');
     }
     return progressIndicatorBuilder(context, loadingProgress);
   }

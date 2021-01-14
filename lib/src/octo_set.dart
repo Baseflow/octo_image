@@ -33,6 +33,7 @@ class OctoSet {
     this.errorBuilder,
   }) : assert(placeholderBuilder != null || progressIndicatorBuilder != null);
 
+  /* Disabled until BlurHash has a released NNBD version
   /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
   /// placeholder and [OctoError.icon] as error.
   factory OctoSet.blurHash(
@@ -45,6 +46,7 @@ class OctoSet {
       errorBuilder: OctoError.blurHash(hash, fit: fit),
     );
   }
+   */
 
   /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
   /// placeholder and [OctoError.icon] as error.

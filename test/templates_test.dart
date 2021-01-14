@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:octo_image/octo_image.dart';
 
 List<OctoPlaceholderBuilder> placeholderBuilders = [
-  OctoPlaceholder.blurHash('LEHV6nWB2yk8pyo0adR*.7kCMdnj'),
+  // OctoPlaceholder.blurHash('LEHV6nWB2yk8pyo0adR*.7kCMdnj'),
   OctoPlaceholder.circularProgressIndicator(),
   OctoPlaceholder.circleAvatar(
     backgroundColor: Colors.blue,
