@@ -55,6 +55,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_blurhash:
+    dependency: transitive
+    description:
+      name: flutter_blurhash
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.2-nullsafety.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -94,7 +101,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.3.0"
+    version: "1.0.0-nullsafety.0"
   path:
     dependency: transitive
     description:

@@ -1,3 +1,6 @@
+## [1.0.0-nullsafety.1] - 2021-01-15
+* Re-enabled blurhash features.
+
 ## [1.0.0-nullsafety.0] - 2021-01-14
 * NNBD migrated version
 * (Temporarily) removed blurhash feature.
