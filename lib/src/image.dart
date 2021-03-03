@@ -302,6 +302,7 @@ class OctoImage extends StatefulWidget {
 
 class _OctoImageState extends State<OctoImage> {
   Widget? _previousImage;
+  Widget? _loadingImageWidget;
   Widget? _resolvedImage;
 
   @override
@@ -331,27 +332,28 @@ class _OctoImageState extends State<OctoImage> {
         frameBuilder = _preLoadingBuilder;
         break;
     }
+    _loadingImageWidget = Image(
+      image: widget.image,
+      loadingBuilder: placeholderType == _PlaceholderType.progress
+          ? _loadingBuilder
+          : null,
+      frameBuilder: frameBuilder,
+      errorBuilder: widget.errorBuilder != null ? _errorBuilder : null,
+      fit: widget.fit,
+      width: widget.width,
+      height: widget.height,
+      alignment: widget.alignment,
+      repeat: widget.repeat,
+      color: widget.color,
+      colorBlendMode: widget.colorBlendMode,
+      matchTextDirection: widget.matchTextDirection,
+      filterQuality: widget.filterQuality,
+    );
 
     return SizedBox(
       width: widget.width,
       height: widget.height,
-      child: Image(
-        image: widget.image,
-        loadingBuilder: placeholderType == _PlaceholderType.progress
-            ? _loadingBuilder
-            : null,
-        frameBuilder: frameBuilder,
-        errorBuilder: widget.errorBuilder != null ? _errorBuilder : null,
-        fit: widget.fit,
-        width: widget.width,
-        height: widget.height,
-        alignment: widget.alignment,
-        repeat: widget.repeat,
-        color: widget.color,
-        colorBlendMode: widget.colorBlendMode,
-        matchTextDirection: widget.matchTextDirection,
-        filterQuality: widget.filterQuality,
-      ),
+      child: _loadingImageWidget,
     );
   }
 
@@ -440,12 +442,14 @@ class _OctoImageState extends State<OctoImage> {
 
   Widget _image(BuildContext context, Widget child) {
     var imageBuilder = widget.imageBuilder;
+    Widget imageWidget;
+    _resolvedImage = _loadingImageWidget;
     if (imageBuilder != null) {
-      _resolvedImage = imageBuilder(context, child);
+      imageWidget = imageBuilder(context, child);
     } else {
-      _resolvedImage = child;
+      imageWidget = child;
     }
-    return _resolvedImage!;
+    return imageWidget;
   }
 
   Widget _errorBuilder(
