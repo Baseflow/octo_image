@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' as flutter;
 
 import 'fade_widget.dart';
 import 'octo_set.dart';
@@ -301,8 +302,8 @@ class OctoImage extends StatefulWidget {
 }
 
 class _OctoImageState extends State<OctoImage> {
-  Widget? _previousImage;
-  Widget? _resolvedImage;
+  ImageProvider? _previousImage;
+  ImageProvider? _resolvedImage;
 
   @override
   void didUpdateWidget(OctoImage oldWidget) {
@@ -440,12 +441,14 @@ class _OctoImageState extends State<OctoImage> {
 
   Widget _image(BuildContext context, Widget child) {
     var imageBuilder = widget.imageBuilder;
+    Widget imageWidget;
     if (imageBuilder != null) {
-      _resolvedImage = imageBuilder(context, child);
+      imageWidget = imageBuilder(context, child);
     } else {
-      _resolvedImage = child;
+      imageWidget = child;
     }
-    return _resolvedImage!;
+    _resolvedImage = widget.image;
+    return imageWidget;
   }
 
   Widget _errorBuilder(
@@ -471,7 +474,7 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   Widget _placeholder(BuildContext context) {
-    if (_previousImage != null) return _previousImage!;
+    if (_previousImage != null) return flutter.Image(image: _previousImage!,);
 
     var placeholderBuilder = widget.placeholderBuilder;
     if (placeholderBuilder != null) {
