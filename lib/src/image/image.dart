@@ -296,15 +296,14 @@ class OctoImage extends StatefulWidget {
 }
 
 class _OctoImageState extends State<OctoImage> {
-  Widget? _previousImage;
-  Widget? _resolvedImage;
-
+  ImageHandler? _previousHandler;
   late ImageHandler _imageHandler;
 
   @override
   void initState() {
     super.initState();
     _imageHandler = ImageHandler(
+      image: widget.image,
       imageBuilder: widget.imageBuilder,
       placeholderBuilder: widget.placeholderBuilder,
       progressIndicatorBuilder: widget.progressIndicatorBuilder,
@@ -314,6 +313,15 @@ class _OctoImageState extends State<OctoImage> {
       fadeOutCurve: widget.fadeOutCurve,
       fadeInDuration: widget.fadeInDuration,
       fadeInCurve: widget.fadeInCurve,
+      fit: widget.fit,
+      width: widget.width,
+      height: widget.height,
+      alignment: widget.alignment,
+      repeat: widget.repeat,
+      color: widget.color,
+      colorBlendMode: widget.colorBlendMode,
+      matchTextDirection: widget.matchTextDirection,
+      filterQuality: widget.filterQuality,
     );
   }
 
@@ -321,21 +329,33 @@ class _OctoImageState extends State<OctoImage> {
   void didUpdateWidget(OctoImage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.image != widget.image) {
-      if (widget.gaplessPlayback && _resolvedImage != null) {
-        _previousImage = _resolvedImage;
+      if (widget.gaplessPlayback) {
+        _previousHandler = _imageHandler;
       }
-      _resolvedImage = null;
     }
     _imageHandler = ImageHandler(
+      image: widget.image,
       imageBuilder: widget.imageBuilder,
-      placeholderBuilder: widget.placeholderBuilder,
-      progressIndicatorBuilder: widget.progressIndicatorBuilder,
+      placeholderBuilder: _previousHandler != null
+          ? _previousHandler!.build
+          : widget.placeholderBuilder,
+      progressIndicatorBuilder:
+          _previousHandler != null ? null : widget.progressIndicatorBuilder,
       errorBuilder: widget.errorBuilder,
       placeholderFadeInDuration: widget.placeholderFadeInDuration,
       fadeOutDuration: widget.fadeOutDuration,
       fadeOutCurve: widget.fadeOutCurve,
       fadeInDuration: widget.fadeInDuration,
       fadeInCurve: widget.fadeInCurve,
+      fit: widget.fit,
+      width: widget.width,
+      height: widget.height,
+      alignment: widget.alignment,
+      repeat: widget.repeat,
+      color: widget.color,
+      colorBlendMode: widget.colorBlendMode,
+      matchTextDirection: widget.matchTextDirection,
+      filterQuality: widget.filterQuality,
     );
   }
 
@@ -344,21 +364,7 @@ class _OctoImageState extends State<OctoImage> {
     return SizedBox(
       width: widget.width,
       height: widget.height,
-      child: Image(
-        image: widget.image,
-        loadingBuilder: _imageHandler.imageLoadingBuilder(),
-        frameBuilder: _imageHandler.imageFrameBuilder(),
-        errorBuilder: _imageHandler.errorWidgetBuilder(),
-        fit: widget.fit,
-        width: widget.width,
-        height: widget.height,
-        alignment: widget.alignment,
-        repeat: widget.repeat,
-        color: widget.color,
-        colorBlendMode: widget.colorBlendMode,
-        matchTextDirection: widget.matchTextDirection,
-        filterQuality: widget.filterQuality,
-      ),
+      child: _imageHandler.build(context),
     );
   }
 }
