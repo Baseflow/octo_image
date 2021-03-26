@@ -13,12 +13,12 @@ typedef OctoImageBuilder = Widget Function(BuildContext context, Widget child);
 typedef OctoPlaceholderBuilder = Widget Function(BuildContext context);
 typedef OctoProgressIndicatorBuilder = Widget Function(
   BuildContext context,
-  ImageChunkEvent progress,
+  ImageChunkEvent? progress,
 );
 typedef OctoErrorBuilder = Widget Function(
   BuildContext context,
   Object error,
-  StackTrace stackTrace,
+  StackTrace? stackTrace,
 );
 
 /// OctoImage can be used as a replacement of [Image]. It can be used with any
@@ -33,16 +33,16 @@ class OctoImage extends StatefulWidget {
   final ImageProvider image;
 
   /// Optional builder to further customize the display of the image.
-  final OctoImageBuilder imageBuilder;
+  final OctoImageBuilder? imageBuilder;
 
   /// Widget displayed while the target [imageUrl] is loading.
-  final OctoPlaceholderBuilder placeholderBuilder;
+  final OctoPlaceholderBuilder? placeholderBuilder;
 
   /// Widget displayed while the target [imageUrl] is loading.
-  final OctoProgressIndicatorBuilder progressIndicatorBuilder;
+  final OctoProgressIndicatorBuilder? progressIndicatorBuilder;
 
   /// Widget displayed while the target [imageUrl] failed loading.
-  final OctoErrorBuilder errorBuilder;
+  final OctoErrorBuilder? errorBuilder;
 
   /// The duration of the fade-in animation for the [placeholderBuilder].
   final Duration placeholderFadeInDuration;
@@ -65,7 +65,7 @@ class OctoImage extends StatefulWidget {
   /// aspect ratio. This may result in a sudden change if the size of the
   /// placeholder widget does not match that of the target image. The size is
   /// also affected by the scale factor.
-  final double width;
+  final double? width;
 
   /// If non-null, require the image to have this height.
   ///
@@ -73,13 +73,13 @@ class OctoImage extends StatefulWidget {
   /// aspect ratio. This may result in a sudden change if the size of the
   /// placeholder widget does not match that of the target image. The size is
   /// also affected by the scale factor.
-  final double height;
+  final double? height;
 
   /// How to inscribe the image into the space allocated during layout.
   ///
   /// The default varies based on the other fields. See the discussion at
   /// [paintImage].
-  final BoxFit fit;
+  final BoxFit? fit;
 
   /// How to align the image within its bounds.
   ///
@@ -127,7 +127,7 @@ class OctoImage extends StatefulWidget {
 
   /// If non-null, this color is blended with each image pixel using
   /// [colorBlendMode].
-  final Color color;
+  final Color? color;
 
   /// Used to combine [color] with this image.
   ///
@@ -138,7 +138,7 @@ class OctoImage extends StatefulWidget {
   ///
   ///  * [BlendMode], which includes an illustration of the effect of each
   ///  blend mode.
-  final BlendMode colorBlendMode;
+  final BlendMode? colorBlendMode;
 
   /// Target the interpolation quality for image scaling.
   ///
@@ -185,29 +185,29 @@ class OctoImage extends StatefulWidget {
   /// regardless of these parameters. These parameters are primarily intended
   /// to reduce the memory usage of [ImageCache].
   OctoImage({
-    Key key,
-    image,
+    Key? key,
+    required ImageProvider image,
     this.imageBuilder,
     this.placeholderBuilder,
     this.progressIndicatorBuilder,
     this.errorBuilder,
-    Duration fadeOutDuration,
-    Curve fadeOutCurve,
-    Duration fadeInDuration,
-    Curve fadeInCurve,
+    Duration? fadeOutDuration,
+    Curve? fadeOutCurve,
+    Duration? fadeInDuration,
+    Curve? fadeInCurve,
     this.width,
     this.height,
     this.fit,
-    Alignment alignment,
-    ImageRepeat repeat,
-    bool matchTextDirection,
+    Alignment? alignment,
+    ImageRepeat? repeat,
+    bool? matchTextDirection,
     this.color,
-    FilterQuality filterQuality,
+    FilterQuality? filterQuality,
     this.colorBlendMode,
-    Duration placeholderFadeInDuration,
-    bool gaplessPlayback,
-    int memCacheWidth,
-    int memCacheHeight,
+    Duration? placeholderFadeInDuration,
+    bool? gaplessPlayback,
+    int? memCacheWidth,
+    int? memCacheHeight,
   })  : image = ResizeImage.resizeIfNeeded(
           memCacheWidth,
           memCacheHeight,
@@ -255,32 +255,31 @@ class OctoImage extends StatefulWidget {
   /// regardless of these parameters. These parameters are primarily intended
   /// to reduce the memory usage of [ImageCache].
   OctoImage.fromSet({
-    Key key,
-    @required image,
-    @required OctoSet octoSet,
-    Duration fadeOutDuration,
-    Curve fadeOutCurve,
-    Duration fadeInDuration,
-    Curve fadeInCurve,
+    Key? key,
+    required ImageProvider image,
+    required OctoSet octoSet,
+    Duration? fadeOutDuration,
+    Curve? fadeOutCurve,
+    Duration? fadeInDuration,
+    Curve? fadeInCurve,
     this.width,
     this.height,
     this.fit,
-    Alignment alignment,
-    ImageRepeat repeat,
-    bool matchTextDirection,
+    Alignment? alignment,
+    ImageRepeat? repeat,
+    bool? matchTextDirection,
     this.color,
-    FilterQuality filterQuality,
+    FilterQuality? filterQuality,
     this.colorBlendMode,
-    Duration placeholderFadeInDuration,
-    bool gaplessPlayback,
-    int memCacheWidth,
-    int memCacheHeight,
+    Duration? placeholderFadeInDuration,
+    bool? gaplessPlayback,
+    int? memCacheWidth,
+    int? memCacheHeight,
   })  : image = ResizeImage.resizeIfNeeded(
           memCacheWidth,
           memCacheHeight,
           image,
         ),
-        assert(octoSet != null),
         imageBuilder = octoSet.imageBuilder,
         placeholderBuilder = octoSet.placeholderBuilder,
         progressIndicatorBuilder = octoSet.progressIndicatorBuilder,
@@ -302,8 +301,8 @@ class OctoImage extends StatefulWidget {
 }
 
 class _OctoImageState extends State<OctoImage> {
-  Widget _previousImage;
-  Widget _resolvedImage;
+  Widget? _previousImage;
+  Widget? _resolvedImage;
 
   @override
   void didUpdateWidget(OctoImage oldWidget) {
@@ -320,7 +319,7 @@ class _OctoImageState extends State<OctoImage> {
   Widget build(BuildContext context) {
     var placeholderType = _definePlaceholderType();
 
-    ImageFrameBuilder frameBuilder;
+    ImageFrameBuilder? frameBuilder;
     switch (placeholderType) {
       case _PlaceholderType.none:
         frameBuilder = _imageBuilder;
@@ -376,7 +375,7 @@ class _OctoImageState extends State<OctoImage> {
     );
   }
 
-  Widget _imageBuilder(BuildContext context, Widget child, int frame,
+  Widget _imageBuilder(BuildContext context, Widget child, int? frame,
       bool wasSynchronouslyLoaded) {
     if (frame == null) {
       return child;
@@ -384,7 +383,7 @@ class _OctoImageState extends State<OctoImage> {
     return _image(context, child);
   }
 
-  Widget _placeholderBuilder(BuildContext context, Widget child, int frame,
+  Widget _placeholderBuilder(BuildContext context, Widget child, int? frame,
       bool wasSynchronouslyLoaded) {
     if (frame == null) {
       if (widget.placeholderFadeInDuration != Duration.zero) {
@@ -408,7 +407,8 @@ class _OctoImageState extends State<OctoImage> {
 
   bool _wasSynchronouslyLoaded = false;
   bool _isLoaded = false;
-  Widget _preLoadingBuilder(BuildContext context, Widget child, int frame,
+
+  Widget _preLoadingBuilder(BuildContext context, Widget child, int? frame,
       bool wasSynchronouslyLoaded) {
     _wasSynchronouslyLoaded = wasSynchronouslyLoaded;
     _isLoaded = frame != null;
@@ -416,7 +416,7 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   Widget _loadingBuilder(
-      BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+      BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
     if (_isLoaded) {
       if (_wasSynchronouslyLoaded) {
         return _image(context, child);
@@ -439,28 +439,43 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   Widget _image(BuildContext context, Widget child) {
-    if (widget.imageBuilder != null) {
-      _resolvedImage = widget.imageBuilder(context, child);
+    var imageBuilder = widget.imageBuilder;
+    if (imageBuilder != null) {
+      _resolvedImage = imageBuilder(context, child);
     } else {
       _resolvedImage = child;
     }
-    return _resolvedImage;
+    return _resolvedImage!;
   }
 
-  Widget _errorBuilder(context, error, stacktrace) {
-    return widget.errorBuilder(context, error, stacktrace);
+  Widget _errorBuilder(
+    BuildContext context,
+    Object error,
+    StackTrace? stacktrace,
+  ) {
+    var errorBuilder = widget.errorBuilder;
+    if (errorBuilder == null) {
+      throw StateError('Try to build errorBuilder with errorBuilder null');
+    }
+    return errorBuilder(context, error, stacktrace);
   }
 
   Widget _progressIndicator(
-      BuildContext context, ImageChunkEvent loadingProgress) {
-    return widget.progressIndicatorBuilder(context, loadingProgress);
+      BuildContext context, ImageChunkEvent? loadingProgress) {
+    var progressIndicatorBuilder = widget.progressIndicatorBuilder;
+    if (progressIndicatorBuilder == null) {
+      throw StateError(
+          'Try to build progressIndicatorBuilder with progressIndicatorBuilder null');
+    }
+    return progressIndicatorBuilder(context, loadingProgress);
   }
 
   Widget _placeholder(BuildContext context) {
-    if (_previousImage != null) return _previousImage;
+    if (_previousImage != null) return _previousImage!;
 
-    if (widget.placeholderBuilder != null) {
-      return widget.placeholderBuilder(context);
+    var placeholderBuilder = widget.placeholderBuilder;
+    if (placeholderBuilder != null) {
+      return placeholderBuilder(context);
     }
     return Container();
   }

@@ -15,11 +15,11 @@ class OctoError {
   /// By default icon color will be the value given by the current [IconTheme].
   static OctoErrorBuilder blurHash(
     String hash, {
-    BoxFit fit,
-    Text message,
-    IconData icon,
-    Color iconColor,
-    double iconSize,
+    BoxFit? fit,
+    Text? message,
+    IconData? icon,
+    Color? iconColor,
+    double? iconSize,
   }) {
     return placeholderWithErrorIcon(
       OctoPlaceholder.blurHash(hash, fit: fit),
@@ -32,8 +32,8 @@ class OctoError {
 
   /// Displays a [CircleAvatar] as errorWidget
   static OctoErrorBuilder circleAvatar({
-    @required Color backgroundColor,
-    @required Widget text,
+    required Color backgroundColor,
+    required Widget text,
   }) {
     return (context, error, stacktrace) => SizedBox(
           width: double.infinity,
@@ -49,7 +49,7 @@ class OctoError {
   /// the value given by the current [IconTheme].
   static OctoErrorBuilder icon({
     IconData icon = Icons.error,
-    Color color,
+    Color? color,
   }) {
     return (context, error, stacktrace) => Icon(
           icon,
@@ -60,10 +60,10 @@ class OctoError {
   /// Simple stack that shows an icon over the placeholder with a 50% opacity.
   static OctoErrorBuilder placeholderWithErrorIcon(
     OctoPlaceholderBuilder placeholderBuilder, {
-    IconData icon,
-    Color iconColor,
-    double iconSize,
-    Text message,
+    IconData? icon,
+    Color? iconColor,
+    double? iconSize,
+    Text? message,
   }) {
     icon ??= Icons.error_outline;
     iconSize ??= 30.0;

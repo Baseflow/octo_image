@@ -13,7 +13,7 @@ class OctoPlaceholder {
   /// Use [BlurHash](https://pub.dev/packages/flutter_blurhash) as a placeholder.
   /// The hash should be made server side. See [blurha.sh](https://blurha.sh/) for more information.
   /// [fit] defaults to [BoxFit.cover].
-  static OctoPlaceholderBuilder blurHash(String hash, {BoxFit fit}) {
+  static OctoPlaceholderBuilder blurHash(String hash, {BoxFit? fit}) {
     return (context) => SizedBox.expand(
           child: Image(
             image: BlurHashImage(hash),
@@ -24,8 +24,8 @@ class OctoPlaceholder {
 
   /// Displays a [CircleAvatar] as placeholder
   static OctoPlaceholderBuilder circleAvatar({
-    @required Color backgroundColor,
-    @required Widget text,
+    required Color backgroundColor,
+    required Widget text,
   }) {
     return (context) => SizedBox(
           width: double.infinity,

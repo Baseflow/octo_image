@@ -15,16 +15,16 @@ import 'image_transformers.dart';
 ///    );
 class OctoSet {
   /// Optional builder to further customize the display of the image.
-  final OctoImageBuilder imageBuilder;
+  final OctoImageBuilder? imageBuilder;
 
   /// Widget displayed while the target [imageUrl] is loading.
-  final OctoPlaceholderBuilder placeholderBuilder;
+  final OctoPlaceholderBuilder? placeholderBuilder;
 
   /// Widget displayed while the target [imageUrl] is loading.
-  final OctoProgressIndicatorBuilder progressIndicatorBuilder;
+  final OctoProgressIndicatorBuilder? progressIndicatorBuilder;
 
   /// Widget displayed while the target [imageUrl] failed loading.
-  final OctoErrorBuilder errorBuilder;
+  final OctoErrorBuilder? errorBuilder;
 
   OctoSet._({
     this.imageBuilder,
@@ -37,8 +37,8 @@ class OctoSet {
   /// placeholder and [OctoError.icon] as error.
   factory OctoSet.blurHash(
     String hash, {
-    BoxFit fit,
-    Text errorMessage,
+    BoxFit? fit,
+    Text? errorMessage,
   }) {
     return OctoSet._(
       placeholderBuilder: OctoPlaceholder.blurHash(hash, fit: fit),
@@ -49,8 +49,8 @@ class OctoSet {
   /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
   /// placeholder and [OctoError.icon] as error.
   factory OctoSet.circleAvatar({
-    @required Color backgroundColor,
-    @required Widget text,
+    required Color backgroundColor,
+    required Widget text,
   }) {
     return OctoSet._(
       placeholderBuilder: OctoPlaceholder.circleAvatar(

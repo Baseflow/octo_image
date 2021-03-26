@@ -3,7 +3,8 @@ import 'dart:ui' as ui show Codec;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
+
+import 'transparent_image.dart';
 
 enum TestUseCase {
   loadAndFail,
@@ -15,7 +16,7 @@ enum TestUseCase {
 class MockImageProvider extends ImageProvider<MockImageProvider> {
   final _timeStamp = DateTime.now().millisecondsSinceEpoch;
   MockImageProvider({
-    @required this.useCase,
+    required this.useCase,
   });
 
   final TestUseCase useCase;
@@ -55,7 +56,7 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
         }
       }
       if(fail){
-        throw Exception("Image loading failed");
+        throw Exception('Image loading failed');
       }
       var decodedImage = await decode(kTransparentImage);
       yield decodedImage;
