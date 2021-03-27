@@ -1,3 +1,7 @@
+## [1.0.0] - 2021-03-27
+* Fixes "Cannot clone a disposed image" error
+* Migration to nullsafety
+
 ## [1.0.0-nullsafety.1] - 2021-01-15
 * Re-enabled blurhash features.
 
