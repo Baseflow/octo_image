@@ -1,13 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import 'fade_widget.dart';
-import 'octo_set.dart';
-
-enum _PlaceholderType {
-  none,
-  static,
-  progress,
-}
+import '../octo_set.dart';
+import 'image_handler.dart';
 
 typedef OctoImageBuilder = Widget Function(BuildContext context, Widget child);
 typedef OctoPlaceholderBuilder = Widget Function(BuildContext context);
@@ -301,194 +296,75 @@ class OctoImage extends StatefulWidget {
 }
 
 class _OctoImageState extends State<OctoImage> {
-  Widget? _previousImage;
-  Widget? _resolvedImage;
+  ImageHandler? _previousHandler;
+  late ImageHandler _imageHandler;
+
+  @override
+  void initState() {
+    super.initState();
+    _imageHandler = ImageHandler(
+      image: widget.image,
+      imageBuilder: widget.imageBuilder,
+      placeholderBuilder: widget.placeholderBuilder,
+      progressIndicatorBuilder: widget.progressIndicatorBuilder,
+      errorBuilder: widget.errorBuilder,
+      placeholderFadeInDuration: widget.placeholderFadeInDuration,
+      fadeOutDuration: widget.fadeOutDuration,
+      fadeOutCurve: widget.fadeOutCurve,
+      fadeInDuration: widget.fadeInDuration,
+      fadeInCurve: widget.fadeInCurve,
+      fit: widget.fit,
+      width: widget.width,
+      height: widget.height,
+      alignment: widget.alignment,
+      repeat: widget.repeat,
+      color: widget.color,
+      colorBlendMode: widget.colorBlendMode,
+      matchTextDirection: widget.matchTextDirection,
+      filterQuality: widget.filterQuality,
+    );
+  }
 
   @override
   void didUpdateWidget(OctoImage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.image != widget.image) {
-      if (widget.gaplessPlayback && _resolvedImage != null) {
-        _previousImage = _resolvedImage;
+      if (widget.gaplessPlayback) {
+        _previousHandler = _imageHandler;
       }
-      _resolvedImage = null;
     }
+    _imageHandler = ImageHandler(
+      image: widget.image,
+      imageBuilder: widget.imageBuilder,
+      placeholderBuilder: _previousHandler != null
+          ? _previousHandler!.build
+          : widget.placeholderBuilder,
+      progressIndicatorBuilder:
+          _previousHandler != null ? null : widget.progressIndicatorBuilder,
+      errorBuilder: widget.errorBuilder,
+      placeholderFadeInDuration: widget.placeholderFadeInDuration,
+      fadeOutDuration: widget.fadeOutDuration,
+      fadeOutCurve: widget.fadeOutCurve,
+      fadeInDuration: widget.fadeInDuration,
+      fadeInCurve: widget.fadeInCurve,
+      fit: widget.fit,
+      width: widget.width,
+      height: widget.height,
+      alignment: widget.alignment,
+      repeat: widget.repeat,
+      color: widget.color,
+      colorBlendMode: widget.colorBlendMode,
+      matchTextDirection: widget.matchTextDirection,
+      filterQuality: widget.filterQuality,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    var placeholderType = _definePlaceholderType();
-
-    ImageFrameBuilder? frameBuilder;
-    switch (placeholderType) {
-      case _PlaceholderType.none:
-        frameBuilder = _imageBuilder;
-        break;
-      case _PlaceholderType.static:
-        frameBuilder = _placeholderBuilder;
-        break;
-      case _PlaceholderType.progress:
-        frameBuilder = _preLoadingBuilder;
-        break;
-    }
-
     return SizedBox(
       width: widget.width,
       height: widget.height,
-      child: Image(
-        image: widget.image,
-        loadingBuilder: placeholderType == _PlaceholderType.progress
-            ? _loadingBuilder
-            : null,
-        frameBuilder: frameBuilder,
-        errorBuilder: widget.errorBuilder != null ? _errorBuilder : null,
-        fit: widget.fit,
-        width: widget.width,
-        height: widget.height,
-        alignment: widget.alignment,
-        repeat: widget.repeat,
-        color: widget.color,
-        colorBlendMode: widget.colorBlendMode,
-        matchTextDirection: widget.matchTextDirection,
-        filterQuality: widget.filterQuality,
-      ),
+      child: _imageHandler.build(context),
     );
-  }
-
-  Widget _stack(Widget revealing, Widget disappearing) {
-    return Stack(
-      fit: StackFit.passthrough,
-      alignment: Alignment.center,
-      children: [
-        FadeWidget(
-          child: revealing,
-          duration: widget.fadeInDuration,
-          curve: widget.fadeInCurve,
-        ),
-        FadeWidget(
-          child: disappearing,
-          duration: widget.fadeOutDuration,
-          curve: widget.fadeOutCurve,
-          direction: AnimationDirection.reverse,
-        )
-      ],
-    );
-  }
-
-  Widget _imageBuilder(BuildContext context, Widget child, int? frame,
-      bool wasSynchronouslyLoaded) {
-    if (frame == null) {
-      return child;
-    }
-    return _image(context, child);
-  }
-
-  Widget _placeholderBuilder(BuildContext context, Widget child, int? frame,
-      bool wasSynchronouslyLoaded) {
-    if (frame == null) {
-      if (widget.placeholderFadeInDuration != Duration.zero) {
-        return FadeWidget(
-          child: _placeholder(context),
-          duration: widget.placeholderFadeInDuration,
-          curve: widget.fadeInCurve,
-        );
-      } else {
-        return _placeholder(context);
-      }
-    }
-    if (wasSynchronouslyLoaded) {
-      return _image(context, child);
-    }
-    return _stack(
-      _image(context, child),
-      _placeholder(context),
-    );
-  }
-
-  bool _wasSynchronouslyLoaded = false;
-  bool _isLoaded = false;
-
-  Widget _preLoadingBuilder(BuildContext context, Widget child, int? frame,
-      bool wasSynchronouslyLoaded) {
-    _wasSynchronouslyLoaded = wasSynchronouslyLoaded;
-    _isLoaded = frame != null;
-    return child;
-  }
-
-  Widget _loadingBuilder(
-      BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-    if (_isLoaded) {
-      if (_wasSynchronouslyLoaded) {
-        return _image(context, child);
-      }
-      return _stack(
-        _image(context, child),
-        _progressIndicator(context, null),
-      );
-    }
-
-    if (widget.placeholderFadeInDuration != Duration.zero) {
-      return FadeWidget(
-        child: _progressIndicator(context, loadingProgress),
-        duration: widget.placeholderFadeInDuration,
-        curve: widget.fadeInCurve,
-      );
-    } else {
-      return _progressIndicator(context, loadingProgress);
-    }
-  }
-
-  Widget _image(BuildContext context, Widget child) {
-    var imageBuilder = widget.imageBuilder;
-    if (imageBuilder != null) {
-      _resolvedImage = imageBuilder(context, child);
-    } else {
-      _resolvedImage = child;
-    }
-    return _resolvedImage!;
-  }
-
-  Widget _errorBuilder(
-    BuildContext context,
-    Object error,
-    StackTrace? stacktrace,
-  ) {
-    var errorBuilder = widget.errorBuilder;
-    if (errorBuilder == null) {
-      throw StateError('Try to build errorBuilder with errorBuilder null');
-    }
-    return errorBuilder(context, error, stacktrace);
-  }
-
-  Widget _progressIndicator(
-      BuildContext context, ImageChunkEvent? loadingProgress) {
-    var progressIndicatorBuilder = widget.progressIndicatorBuilder;
-    if (progressIndicatorBuilder == null) {
-      throw StateError(
-          'Try to build progressIndicatorBuilder with progressIndicatorBuilder null');
-    }
-    return progressIndicatorBuilder(context, loadingProgress);
-  }
-
-  Widget _placeholder(BuildContext context) {
-    if (_previousImage != null) return _previousImage!;
-
-    var placeholderBuilder = widget.placeholderBuilder;
-    if (placeholderBuilder != null) {
-      return placeholderBuilder(context);
-    }
-    return Container();
-  }
-
-  _PlaceholderType _definePlaceholderType() {
-    assert(widget.placeholderBuilder == null ||
-        widget.progressIndicatorBuilder == null);
-
-    if (_previousImage != null) return _PlaceholderType.static;
-    if (widget.placeholderBuilder != null) return _PlaceholderType.static;
-    if (widget.progressIndicatorBuilder != null) {
-      return _PlaceholderType.progress;
-    }
-    return _PlaceholderType.none;
   }
 }
