@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import 'fade_widget.dart';
 import '../octo_set.dart';
 import 'image_handler.dart';
 

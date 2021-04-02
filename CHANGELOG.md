@@ -1,3 +1,6 @@
+## [1.0.0+1] - 2021-04-02
+* Remove unused import
+
 ## [1.0.0] - 2021-03-27
 * Fixes "Cannot clone a disposed image" error
 * Migration to nullsafety
