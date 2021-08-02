@@ -128,6 +128,10 @@ class ImageHandler {
   /// The curve of the fade-in animation for the [imageUrl].
   final Curve fadeInCurve;
 
+  /// Indicates that placeholder should always be shown, even if the image
+  /// was loaded in the first frame.
+  bool alwaysShowPlaceHolder;
+
   ImageHandler({
     required this.image,
     required this.width,
@@ -148,6 +152,7 @@ class ImageHandler {
     required this.fadeOutCurve,
     required this.fadeInDuration,
     required this.fadeInCurve,
+    required this.alwaysShowPlaceHolder,
   }) {
     _placeholderType = _definePlaceholderType();
   }
@@ -232,7 +237,7 @@ class ImageHandler {
         return _placeholder(context);
       }
     }
-    if (wasSynchronouslyLoaded) {
+    if (wasSynchronouslyLoaded && !alwaysShowPlaceHolder) {
       return _image(context, child);
     }
     return _stack(
