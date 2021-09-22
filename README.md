@@ -6,7 +6,7 @@
 
 An image library for showing placeholders, error widgets and transform your image.
 
-Recommended to use with [CachedNetworkImage](https://pub.dev/packages/cached_network_image) version 2.2.0 or newer.
+Recommended using with [CachedNetworkImage](https://pub.dev/packages/cached_network_image) version 2.2.0 or newer.
 
 <img src="https://raw.githubusercontent.com/Baseflow/octo_image/develop/resources/set-demo.gif" class="center"/>
 
@@ -15,7 +15,7 @@ The OctoImage widget needs an [ImageProvider](#imageProviders) to show the image
 You can either supply the widget with a [placeholder or progress indicator](#placeholders-and-progress-indicators), 
 an [ImageBuilder](#image-builders) and/or an [error widget](#error-widgets).
 
-However, what OctoImage makes is the use of [OctoSets](#octosets). OctoSets are predefined combinations placholders, imagebuilders and error widgets.
+However, what OctoImage makes is the use of [OctoSets](#octosets). OctoSets are predefined combinations of placeholders, imagebuilders and error widgets.
 
 
 So, either set the all the components yourself:
@@ -46,16 +46,16 @@ OctoImage.fromSet(
 The CircleAvatar set shows a colored circle with the text inside during loading and when the image failed loading. When the image loads it animates to the image clipped as a circle.
 
 ## ImageProviders
-The recommended one is CachedNetworkImageProvider as that supports the progress indicator, error and caching. 
-It also works on Android, iOS, web and macOS, although without caching on web. Make sure you use at least version 2.2.0.
+The recommended one is CachedNetworkImageProvider, as that supports the progress indicator, error and caching. 
+It also works on Android, iOS, web and macOS, although without caching on the web. Make sure you use at least version 2.2.0.
 
-Second best is NetworkImage, but any ImageProvider works in theory. However, for some ImageProviders (such as MemoryImage)
+The second best is NetworkImage, but any ImageProvider works in theory. However, for some ImageProviders (such as MemoryImage)
 it doesn't make sense to use OctoImage.
 
 ## Placeholders and progress indicators
-You should use either a placeholder or a progress indicator, but not both. 
-Placeholders are only build once when the image starts loading, but progress indicators are rebuild every time new progress information is received.
-So if you don't use that progress indication, for example with a static image, than you should use a placeholder.
+It would be best if you used either a placeholder or a progress indicator, but not both. 
+Placeholders are only building once the image starts loading, but progress indicators are rebuilt every time new progress information is received.
+So if you don't use that progress indication, for example, with a static image, you should use a placeholder.
 
 The most simple progress indicators use a CircularProgressIndicator.
 
