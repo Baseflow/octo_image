@@ -321,6 +321,7 @@ class _OctoImageState extends State<OctoImage> {
       colorBlendMode: widget.colorBlendMode,
       matchTextDirection: widget.matchTextDirection,
       filterQuality: widget.filterQuality,
+      alwaysShowPlaceHolder: false,
     );
   }
 
@@ -330,6 +331,9 @@ class _OctoImageState extends State<OctoImage> {
     if (oldWidget.image != widget.image) {
       if (widget.gaplessPlayback) {
         _previousHandler = _imageHandler;
+        _previousHandler?.alwaysShowPlaceHolder = false;
+      } else {
+        _previousHandler = null;
       }
     }
     _imageHandler = ImageHandler(
@@ -355,6 +359,7 @@ class _OctoImageState extends State<OctoImage> {
       colorBlendMode: widget.colorBlendMode,
       matchTextDirection: widget.matchTextDirection,
       filterQuality: widget.filterQuality,
+      alwaysShowPlaceHolder: _previousHandler != null,
     );
   }
 
