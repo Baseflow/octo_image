@@ -51,7 +51,7 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
       if (showLoading) {
         var totalSize = 100;
         for (var i = 0; i < totalSize; i++) {
-          await Future.delayed(Duration(milliseconds: 10));
+          await Future.delayed(const Duration(milliseconds: 10));
           chunkEvents.add(ImageChunkEvent(
               cumulativeBytesLoaded: i + 1, expectedTotalBytes: totalSize));
         }
@@ -61,7 +61,7 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
       }
       var url = 'https://blurha.sh/assets/images/img1.jpg';
       Uint8List imageBytes;
-      imageBytes = (await http.get(url)).bodyBytes;
+      imageBytes = (await http.get(Uri.parse(url))).bodyBytes;
       var decodedImage = await decode(imageBytes);
       yield decodedImage;
     } finally {

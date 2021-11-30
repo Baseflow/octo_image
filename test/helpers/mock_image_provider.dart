@@ -50,7 +50,7 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
     try {
       if (showLoading) {
         for (var i = 0; i < 10; i++) {
-          await Future.delayed(Duration(milliseconds: 10));
+          await Future.delayed(const Duration(milliseconds: 10));
           chunkEvents.add(ImageChunkEvent(
               cumulativeBytesLoaded: i + 1, expectedTotalBytes: 10));
         }

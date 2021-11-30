@@ -2,33 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'OctoImage Demo',
       theme: ThemeData(),
-      home: OctoImagePage(),
+      home: const OctoImagePage(),
     );
   }
 }
 
 class OctoImagePage extends StatelessWidget {
+  const OctoImagePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('OctoImage Demo'),
+        title: const Text('OctoImage Demo'),
       ),
       body: ListView(
         children: [
           _customImage(),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           _simpleBlur(),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           _circleAvatar(),
         ],
       ),
@@ -39,7 +43,7 @@ class OctoImagePage extends StatelessWidget {
     return SizedBox(
       height: 150,
       child: OctoImage(
-        image: NetworkImage('https://via.placeholder.com/150'),
+        image: const NetworkImage('https://via.placeholder.com/150'),
         progressIndicatorBuilder: (context, progress) {
           double? value;
           var expectedBytes = progress?.expectedTotalBytes;
@@ -48,7 +52,7 @@ class OctoImagePage extends StatelessWidget {
           }
           return CircularProgressIndicator(value: value);
         },
-        errorBuilder: (context, error, stacktrace) => Icon(Icons.error),
+        errorBuilder: (context, error, stacktrace) => const Icon(Icons.error),
       ),
     );
   }
@@ -57,7 +61,7 @@ class OctoImagePage extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 269 / 173,
       child: OctoImage(
-        image: NetworkImage('https://blurha.sh/assets/images/img1.jpg'),
+        image: const NetworkImage('https://blurha.sh/assets/images/img1.jpg'),
         placeholderBuilder: OctoPlaceholder.blurHash(
           'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
         ),
@@ -72,12 +76,12 @@ class OctoImagePage extends StatelessWidget {
       height: 75,
       child: OctoImage.fromSet(
         fit: BoxFit.cover,
-        image: NetworkImage(
+        image: const NetworkImage(
           'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/1024px-Macaca_nigra_self-portrait_large.jpg',
         ),
         octoSet: OctoSet.circleAvatar(
           backgroundColor: Colors.red,
-          text: Text("M"),
+          text: const Text("M"),
         ),
       ),
     );
