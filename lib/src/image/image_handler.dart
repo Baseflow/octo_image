@@ -180,6 +180,7 @@ class ImageHandler {
 
   Widget build(BuildContext context) {
     return Image(
+      key: ValueKey(image),
       image: image,
       loadingBuilder: imageLoadingBuilder(),
       frameBuilder: imageFrameBuilder(),
