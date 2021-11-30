@@ -44,8 +44,7 @@ class OctoImagePage extends StatelessWidget {
           double? value;
           var expectedBytes = progress?.expectedTotalBytes;
           if (progress != null && expectedBytes != null) {
-            value =
-                progress.cumulativeBytesLoaded / expectedBytes;
+            value = progress.cumulativeBytesLoaded / expectedBytes;
           }
           return CircularProgressIndicator(value: value);
         },
@@ -58,8 +57,7 @@ class OctoImagePage extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 269 / 173,
       child: OctoImage(
-        image: NetworkImage(
-            'https://blurha.sh/assets/images/img1.jpg'),
+        image: NetworkImage('https://blurha.sh/assets/images/img1.jpg'),
         placeholderBuilder: OctoPlaceholder.blurHash(
           'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
         ),

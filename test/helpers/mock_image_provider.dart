@@ -55,12 +55,11 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
               cumulativeBytesLoaded: i + 1, expectedTotalBytes: 10));
         }
       }
-      if(fail){
+      if (fail) {
         throw Exception('Image loading failed');
       }
       var decodedImage = await decode(kTransparentImage);
       yield decodedImage;
-
     } finally {
       await chunkEvents.close();
     }

@@ -81,7 +81,7 @@ void main() {
       onProgress: () => progressIndicatorCalled++,
       onError: () => thrown = true,
     ));
-    for(var i=0; i< 10; i++) {
+    for (var i = 0; i < 10; i++) {
       await tester.pump(Duration(milliseconds: 10));
     }
     expect(thrown, isFalse);
@@ -106,7 +106,6 @@ class MyWidget extends StatelessWidget {
         errorBuilder = getErrorBuilder(onError),
         super(key: key);
 
-
   static OctoProgressIndicatorBuilder? getProgress(VoidCallback? onProgress) {
     if (onProgress == null) return null;
     return (context, progress) {
@@ -114,7 +113,6 @@ class MyWidget extends StatelessWidget {
       return CircularProgressIndicator();
     };
   }
-
 
   static OctoPlaceholderBuilder? getPlaceholder(VoidCallback? onPlaceHolder) {
     if (onPlaceHolder == null) return null;

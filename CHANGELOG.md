@@ -1,3 +1,6 @@
+## [1.0.1] - 2021-11-30
+* Fix gapless playback when next image is already in memory.
+
 ## [1.0.0+1] - 2021-04-02
 * Remove unused import
 

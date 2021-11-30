@@ -74,7 +74,7 @@ class _FadeWidgetState extends State<FadeWidget>
   @override
   void didUpdateWidget(FadeWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if(Widget.canUpdate(oldWidget.child, widget.child)) return;
+    if (Widget.canUpdate(oldWidget.child, widget.child)) return;
     opacity.removeStatusListener(animationStatusChange);
     controller.duration = widget.duration;
     controller.value = 0;
@@ -89,7 +89,6 @@ class _FadeWidgetState extends State<FadeWidget>
       opacity.addStatusListener(animationStatusChange);
     }
   }
-
 
   @override
   void dispose() {

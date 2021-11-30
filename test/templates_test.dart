@@ -111,8 +111,6 @@ void main() {
       );
     });
 
-
-
     testWidgets('ProgressIndicators handle unknown progress', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -137,8 +135,6 @@ void main() {
         ),
       );
     });
-
-
 
     testWidgets('ProgressIndicators handle unknown size', (tester) async {
       await tester.pumpWidget(
