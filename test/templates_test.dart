@@ -7,7 +7,7 @@ List<OctoPlaceholderBuilder> placeholderBuilders = [
   OctoPlaceholder.circularProgressIndicator(),
   OctoPlaceholder.circleAvatar(
     backgroundColor: Colors.blue,
-    text: Text('T'),
+    text: const Text('T'),
   ),
   OctoPlaceholder.frame(),
 ];
@@ -15,7 +15,7 @@ List<OctoPlaceholderBuilder> placeholderBuilders = [
 List<OctoErrorBuilder> errorBuilders = [
   OctoError.circleAvatar(
     backgroundColor: Colors.blue,
-    text: Text('T'),
+    text: const Text('T'),
   ),
   OctoError.icon(),
 ];
@@ -90,7 +90,7 @@ void main() {
                 for (var element in progressIndicators) {
                   var knownProgress = element(
                     context,
-                    ImageChunkEvent(
+                    const ImageChunkEvent(
                       cumulativeBytesLoaded: 5,
                       expectedTotalBytes: 10,
                     ),
@@ -146,7 +146,7 @@ void main() {
                 for (var element in progressIndicators) {
                   var unknownSize = element(
                     context,
-                    ImageChunkEvent(
+                    const ImageChunkEvent(
                       cumulativeBytesLoaded: 5,
                       expectedTotalBytes: null,
                     ),

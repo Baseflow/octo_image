@@ -82,7 +82,7 @@ void main() {
       onError: () => thrown = true,
     ));
     for (var i = 0; i < 10; i++) {
-      await tester.pump(Duration(milliseconds: 10));
+      await tester.pump(const Duration(milliseconds: 10));
     }
     expect(thrown, isFalse);
     expect(progressIndicatorCalled, 11);
@@ -110,7 +110,7 @@ class MyWidget extends StatelessWidget {
     if (onProgress == null) return null;
     return (context, progress) {
       onProgress();
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     };
   }
 
@@ -118,7 +118,7 @@ class MyWidget extends StatelessWidget {
     if (onPlaceHolder == null) return null;
     return (context) {
       onPlaceHolder();
-      return Placeholder();
+      return const Placeholder();
     };
   }
 
@@ -126,7 +126,7 @@ class MyWidget extends StatelessWidget {
     if (onError == null) return null;
     return (context, error, stacktrace) {
       onError();
-      return Icon(Icons.error);
+      return const Icon(Icons.error);
     };
   }
 

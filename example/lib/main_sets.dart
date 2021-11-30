@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
           OctoSet.blurHash('LEHV6nWB2yk8pyo0adR*.7kCMdnj'),
           OctoSet.circleAvatar(
             backgroundColor: Colors.red,
-            text: Text(
+            text: const Text(
               "M",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -39,7 +41,7 @@ class OctoImagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set Demo'),
+        title: const Text('Set Demo'),
       ),
       body: ListView(children: sets.map((element) => _row(element)).toList()),
     );
