@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../octo_image.dart';
-import 'image_transformers.dart';
 
 /// OctoSets are predefined combinations of a [OctoPlaceholderBuilder],
 /// [OctoProgressIndicatorBuilder], [OctoImageBuilder] and/or [OctoErrorBuilder].

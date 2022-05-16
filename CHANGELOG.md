@@ -1,3 +1,6 @@
+## [1.0.2] - 2022-05-16
+* Update Blurhash dependency
+
 ## [1.0.1] - 2021-11-30
 * Fix gapless playback when next image is already in memory.
 
