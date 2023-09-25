@@ -170,7 +170,7 @@ You can use them with OctoImage.fromSet:
 ```dart
 OctoImage.fromSet(
   image: image,
-  octoSet: OctoSet.blurHash('LEHV6nWB2yk8pyo0adR*.7kCMdnj'),
+  octoSet: OctoSet.circleAvatar(backgroundColor: Colors.red, text: Text("M")),
 ),
 ```
 
@@ -178,9 +178,52 @@ All included OctoSets are:
 
 |**OctoSet**|**Explanation**|
 |---|---|
-|blurHash|Shows a blurhash as placeholder and error widget. When an error is thrown an icon is shown on top.|
 |circleAvatar|Shows a colored circle with text during load and error. Clips the image after successful load.|
 |circularIndicatorAndIcon|Shows a circularProgressIndicator with or without progress and an icon on error.|
+
+### Blurhash
+You can easily create your own OctoSet though, for example if you want to use blurHash as a placeholder:
+```dart
+/// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
+/// placeholder and [OctoError.icon] as error.
+OctoSet blurHash(
+  String hash, {
+  BoxFit? fit,
+  Text? errorMessage,
+}) {
+  return OctoSet(
+    placeholderBuilder: blurHashPlaceholderBuilder(hash, fit: fit),
+    errorBuilder: blurHashErrorBuilder(hash, fit: fit),
+  );
+}
+
+OctoPlaceholderBuilder blurHashPlaceholderBuilder(String hash, {BoxFit? fit}) {
+  return (context) => SizedBox.expand(
+    child: Image(
+      image: BlurHashImage(hash),
+      fit: fit ?? BoxFit.cover,
+    ),
+  );
+}
+
+
+OctoErrorBuilder blurHashErrorBuilder(
+  String hash, {
+  BoxFit? fit,
+  Text? message,
+  IconData? icon,
+  Color? iconColor,
+  double? iconSize,
+}) {
+  return OctoError.placeholderWithErrorIcon(
+    blurHashPlaceholderBuilder(hash, fit: fit),
+    message: message,
+    icon: icon,
+    iconColor: iconColor,
+    iconSize: iconSize,
+  );
+}
+```
 
 # Contribute
 

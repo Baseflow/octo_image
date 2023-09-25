@@ -1,3 +1,6 @@
+## [2.0.0] - 2023-09-25
+* Remove Blurhash dependency, see [in the readme](https://pub.dev/packages/octo_image#blurhash) how to keep using blurhash.
+
 ## [1.0.2] - 2022-05-16
 * Update Blurhash dependency
 

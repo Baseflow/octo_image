@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       home: OctoImagePage(
         sets: <OctoSet>[
-          OctoSet.blurHash('LEHV6nWB2yk8pyo0adR*.7kCMdnj'),
           OctoSet.circleAvatar(
             backgroundColor: Colors.red,
             text: const Text(
