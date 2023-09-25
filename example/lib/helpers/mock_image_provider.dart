@@ -1,6 +1,6 @@
-import 'dart:async' show Future, StreamController;
-import 'dart:typed_data';
+import 'dart:async';
 import 'dart:ui' as ui show Codec;
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/foundation.dart';
@@ -33,7 +33,8 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
   }
 
   @override
-  ImageStreamCompleter load(MockImageProvider key, DecoderCallback decode) {
+  ImageStreamCompleter loadImage(
+      MockImageProvider key, ImageDecoderCallback decode) {
     final chunkEvents = StreamController<ImageChunkEvent>();
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key, chunkEvents, decode).first,
@@ -45,7 +46,7 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
   Stream<ui.Codec> _loadAsync(
     MockImageProvider key,
     StreamController<ImageChunkEvent> chunkEvents,
-    DecoderCallback decode,
+    ImageDecoderCallback decode,
   ) async* {
     try {
       if (showLoading) {
@@ -62,7 +63,8 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
       var url = 'https://blurha.sh/assets/images/img1.jpg';
       Uint8List imageBytes;
       imageBytes = (await http.get(Uri.parse(url))).bodyBytes;
-      var decodedImage = await decode(imageBytes);
+      final buffer = await ImmutableBuffer.fromUint8List(imageBytes);
+      var decodedImage = await decode(buffer);
       yield decodedImage;
     } finally {
       await chunkEvents.close();

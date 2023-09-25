@@ -39,10 +39,11 @@ class OctoSet {
     required Widget text,
   }) {
     return OctoSet(
-      placeholderBuilder:
-          OctoPlaceholder.circleAvatar(backgroundColor: backgroundColor, text: text),
+      placeholderBuilder: OctoPlaceholder.circleAvatar(
+          backgroundColor: backgroundColor, text: text),
       imageBuilder: OctoImageTransformer.circleAvatar(),
-      errorBuilder: OctoError.circleAvatar(backgroundColor: backgroundColor, text: text),
+      errorBuilder:
+          OctoError.circleAvatar(backgroundColor: backgroundColor, text: text),
     );
   }
 
@@ -50,9 +51,11 @@ class OctoSet {
   /// placeholder and [OctoError.icon] as error.
   factory OctoSet.circularIndicatorAndIcon({bool showProgress = false}) {
     return OctoSet(
-      placeholderBuilder: showProgress ? null : OctoPlaceholder.circularProgressIndicator(),
-      progressIndicatorBuilder:
-          showProgress ? OctoProgressIndicator.circularProgressIndicator() : null,
+      placeholderBuilder:
+          showProgress ? null : OctoPlaceholder.circularProgressIndicator(),
+      progressIndicatorBuilder: showProgress
+          ? OctoProgressIndicator.circularProgressIndicator()
+          : null,
       errorBuilder: OctoError.icon(),
     );
   }
