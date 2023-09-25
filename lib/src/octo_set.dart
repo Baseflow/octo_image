@@ -25,7 +25,7 @@ class OctoSet {
   /// Widget displayed while the target [imageUrl] failed loading.
   final OctoErrorBuilder? errorBuilder;
 
-  OctoSet._({
+  OctoSet({
     this.imageBuilder,
     this.placeholderBuilder,
     this.progressIndicatorBuilder,
@@ -34,24 +34,11 @@ class OctoSet {
 
   /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
   /// placeholder and [OctoError.icon] as error.
-  factory OctoSet.blurHash(
-    String hash, {
-    BoxFit? fit,
-    Text? errorMessage,
-  }) {
-    return OctoSet._(
-      placeholderBuilder: OctoPlaceholder.blurHash(hash, fit: fit),
-      errorBuilder: OctoError.blurHash(hash, fit: fit),
-    );
-  }
-
-  /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
-  /// placeholder and [OctoError.icon] as error.
   factory OctoSet.circleAvatar({
     required Color backgroundColor,
     required Widget text,
   }) {
-    return OctoSet._(
+    return OctoSet(
       placeholderBuilder: OctoPlaceholder.circleAvatar(
           backgroundColor: backgroundColor, text: text),
       imageBuilder: OctoImageTransformer.circleAvatar(),
@@ -63,7 +50,7 @@ class OctoSet {
   /// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
   /// placeholder and [OctoError.icon] as error.
   factory OctoSet.circularIndicatorAndIcon({bool showProgress = false}) {
-    return OctoSet._(
+    return OctoSet(
       placeholderBuilder:
           showProgress ? null : OctoPlaceholder.circularProgressIndicator(),
       progressIndicatorBuilder: showProgress

@@ -1,5 +1,6 @@
 import 'dart:async' show Future, StreamController;
 import 'dart:ui' as ui show Codec;
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,8 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
   }
 
   @override
-  ImageStreamCompleter load(MockImageProvider key, DecoderCallback decode) {
+  ImageStreamCompleter loadImage(
+      MockImageProvider key, ImageDecoderCallback decode) {
     final chunkEvents = StreamController<ImageChunkEvent>();
     return MultiFrameImageStreamCompleter(
       codec: _loadAsync(key, chunkEvents, decode).first,
@@ -45,7 +47,7 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
   Stream<ui.Codec> _loadAsync(
     MockImageProvider key,
     StreamController<ImageChunkEvent> chunkEvents,
-    DecoderCallback decode,
+    ImageDecoderCallback decode,
   ) async* {
     try {
       if (showLoading) {
@@ -58,7 +60,8 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
       if (fail) {
         throw Exception('Image loading failed');
       }
-      var decodedImage = await decode(kTransparentImage);
+      final buffer = await ImmutableBuffer.fromUint8List(kTransparentImage);
+      var decodedImage = await decode(buffer);
       yield decodedImage;
     } finally {
       await chunkEvents.close();

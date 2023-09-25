@@ -31,8 +31,6 @@ class OctoImagePage extends StatelessWidget {
         children: [
           _customImage(),
           const SizedBox(height: 16),
-          _simpleBlur(),
-          const SizedBox(height: 16),
           _circleAvatar(),
         ],
       ),
@@ -53,20 +51,6 @@ class OctoImagePage extends StatelessWidget {
           return CircularProgressIndicator(value: value);
         },
         errorBuilder: (context, error, stacktrace) => const Icon(Icons.error),
-      ),
-    );
-  }
-
-  Widget _simpleBlur() {
-    return AspectRatio(
-      aspectRatio: 269 / 173,
-      child: OctoImage(
-        image: const NetworkImage('https://blurha.sh/assets/images/img1.jpg'),
-        placeholderBuilder: OctoPlaceholder.blurHash(
-          'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-        ),
-        errorBuilder: OctoError.icon(color: Colors.red),
-        fit: BoxFit.cover,
       ),
     );
   }

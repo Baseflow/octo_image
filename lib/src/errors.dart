@@ -10,26 +10,6 @@ import '../octo_image.dart';
 ///      errorBuilder: OctoError.icon(),
 ///    );
 class OctoError {
-  /// Show [OctoPlaceholder.blurHash] with an error icon on top.
-  /// Error icon can be modified along with its size and color.
-  /// By default icon color will be the value given by the current [IconTheme].
-  static OctoErrorBuilder blurHash(
-    String hash, {
-    BoxFit? fit,
-    Text? message,
-    IconData? icon,
-    Color? iconColor,
-    double? iconSize,
-  }) {
-    return placeholderWithErrorIcon(
-      OctoPlaceholder.blurHash(hash, fit: fit),
-      message: message,
-      icon: icon,
-      iconColor: iconColor,
-      iconSize: iconSize,
-    );
-  }
-
   /// Displays a [CircleAvatar] as errorWidget
   static OctoErrorBuilder circleAvatar({
     required Color backgroundColor,
