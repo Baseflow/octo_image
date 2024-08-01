@@ -179,7 +179,7 @@ class OctoImage extends StatefulWidget {
   /// regardless of these parameters. These parameters are primarily intended
   /// to reduce the memory usage of [ImageCache].
   OctoImage({
-    Key? key,
+    super.key,
     required ImageProvider image,
     this.imageBuilder,
     this.placeholderBuilder,
@@ -216,8 +216,7 @@ class OctoImage extends StatefulWidget {
         matchTextDirection = matchTextDirection ?? false,
         filterQuality = filterQuality ?? FilterQuality.low,
         placeholderFadeInDuration = placeholderFadeInDuration ?? Duration.zero,
-        gaplessPlayback = gaplessPlayback ?? false,
-        super(key: key);
+        gaplessPlayback = gaplessPlayback ?? false;
 
   /// Creates an OctoWidget that displays an image with a predefined [OctoSet].
   /// The [image] is an ImageProvider and the OctoImage should work with any
@@ -249,7 +248,7 @@ class OctoImage extends StatefulWidget {
   /// regardless of these parameters. These parameters are primarily intended
   /// to reduce the memory usage of [ImageCache].
   OctoImage.fromSet({
-    Key? key,
+    super.key,
     required ImageProvider image,
     required OctoSet octoSet,
     Duration? fadeOutDuration,
@@ -287,11 +286,10 @@ class OctoImage extends StatefulWidget {
         matchTextDirection = matchTextDirection ?? false,
         filterQuality = filterQuality ?? FilterQuality.low,
         placeholderFadeInDuration = placeholderFadeInDuration ?? Duration.zero,
-        gaplessPlayback = gaplessPlayback ?? false,
-        super(key: key);
+        gaplessPlayback = gaplessPlayback ?? false;
 
   @override
-  _OctoImageState createState() => _OctoImageState();
+  State createState() => _OctoImageState();
 }
 
 class _OctoImageState extends State<OctoImage> {

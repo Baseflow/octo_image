@@ -72,7 +72,7 @@ class MockImageProvider extends ImageProvider<MockImageProvider> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (other is MockImageProvider) {
       return useCase == other.useCase && _timeStamp == other._timeStamp;
     }

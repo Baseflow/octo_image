@@ -203,15 +203,15 @@ class ImageHandler {
       alignment: Alignment.center,
       children: [
         FadeWidget(
-          child: revealing,
           duration: fadeInDuration,
           curve: fadeInCurve,
+          child: revealing,
         ),
         FadeWidget(
-          child: disappearing,
           duration: fadeOutDuration,
           curve: fadeOutCurve,
           direction: AnimationDirection.reverse,
+          child: disappearing,
         )
       ],
     );
@@ -230,9 +230,9 @@ class ImageHandler {
     if (frame == null) {
       if (placeholderFadeInDuration != Duration.zero) {
         return FadeWidget(
-          child: _placeholder(context),
           duration: placeholderFadeInDuration,
           curve: fadeInCurve,
+          child: _placeholder(context),
         );
       } else {
         return _placeholder(context);
@@ -271,9 +271,9 @@ class ImageHandler {
 
     if (placeholderFadeInDuration != Duration.zero) {
       return FadeWidget(
-        child: _progressIndicator(context, loadingProgress),
         duration: placeholderFadeInDuration,
         curve: fadeInCurve,
+        child: _progressIndicator(context, loadingProgress),
       );
     } else {
       return _progressIndicator(context, loadingProgress);

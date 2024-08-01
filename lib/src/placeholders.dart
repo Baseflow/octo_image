@@ -18,8 +18,8 @@ class OctoPlaceholder {
           width: double.infinity,
           height: double.infinity,
           child: CircleAvatar(
-            child: text,
             backgroundColor: backgroundColor,
+            child: text,
           ),
         );
   }

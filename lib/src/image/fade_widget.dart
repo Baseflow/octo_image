@@ -30,11 +30,10 @@ class FadeWidget extends StatefulWidget {
       this.duration = const Duration(milliseconds: 800),
       this.direction = AnimationDirection.forward,
       this.curve = Curves.easeOut,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
-  _FadeWidgetState createState() => _FadeWidgetState();
+  State createState() => _FadeWidgetState();
 }
 
 class _FadeWidgetState extends State<FadeWidget>

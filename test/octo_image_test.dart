@@ -95,15 +95,14 @@ class MyWidget extends StatelessWidget {
   final OctoErrorBuilder? errorBuilder;
 
   MyWidget({
-    Key? key,
+    super.key,
     required this.useCase,
     VoidCallback? onProgress,
     VoidCallback? onPlaceHolder,
     VoidCallback? onError,
   })  : progressBuilder = getProgress(onProgress),
         placeholderBuilder = getPlaceholder(onPlaceHolder),
-        errorBuilder = getErrorBuilder(onError),
-        super(key: key);
+        errorBuilder = getErrorBuilder(onError);
 
   static OctoProgressIndicatorBuilder? getProgress(VoidCallback? onProgress) {
     if (onProgress == null) return null;
