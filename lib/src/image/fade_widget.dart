@@ -66,7 +66,11 @@ class _FadeWidgetState extends State<FadeWidget>
 
     hideWidget = false;
     if (widget.direction == AnimationDirection.reverse) {
-      opacity.addStatusListener(animationStatusChange);
+      if (widget.duration == Duration.zero) {
+        hideWidget = true;
+      } else {
+        opacity.addStatusListener(animationStatusChange);
+      }
     }
   }
 
@@ -85,7 +89,11 @@ class _FadeWidgetState extends State<FadeWidget>
 
     hideWidget = false;
     if (widget.direction == AnimationDirection.reverse) {
-      opacity.addStatusListener(animationStatusChange);
+      if (widget.duration == Duration.zero) {
+        hideWidget = true;
+      } else {
+        opacity.addStatusListener(animationStatusChange);
+      }
     }
   }
 
