@@ -242,7 +242,10 @@ does not bump versions and does not edit changelogs. Never run
 `CHANGELOG.md` today uses `## [x.y.z] - YYYY-MM-DD` headings with `*` bullets
 and no `## [Unreleased]` section. Match that format; introducing an
 `[Unreleased]` section is a separate decision and not something to do as part
-of an unrelated change.
+of an unrelated change. For a release with a breaking change, you may split the
+entry into `### Breaking changes` and `### Other changes` subsections instead of
+a flat list — `cached_network_image` 4.0.0 is the worked example. Not required
+for an ordinary release.
 
 Published versions are immutable, so keep branch names out of URLs in
 `pubspec.yaml` and in docs: a branch-specific link becomes a permanent dead
