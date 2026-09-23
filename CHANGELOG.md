@@ -1,3 +1,9 @@
+## [2.1.1] - 2026-09-23
+* Fix the README build badge and demo image, which pointed at a retired CI service and a branch that no longer exists.
+* Fix the example app's SDK and `flutter_lints` constraints, which excluded every SDK the package supports.
+* Update the example app's Android build to AGP 9.
+* Pin the Flutter version used in CI and move the repository to a `main`-only branching model.
+
 ## [2.1.0] - 2024-08-01
 * Raise the minimum SDK to Dart 3.0 and Flutter 3.10.
 * `alignment` accepts `AlignmentGeometry`, so `AlignmentDirectional` can be used.
