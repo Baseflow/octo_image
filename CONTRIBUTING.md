@@ -24,10 +24,13 @@
 
 We really appreciate contributions via GitHub pull requests. To contribute, take the following steps:
 
-- Make sure you are up to date with the latest code on `develop`:
+- Make sure you are up to date with the latest code on `main`:
   - `git fetch upstream`
-  - `git checkout upstream/develop -b <name_of_your_branch>`
+  - `git checkout upstream/main -b <name_of_your_branch>`
 - Apply your changes
+- Bump the `version:` in `pubspec.yaml` (following semver) and add a matching
+  `## [x.y.z] - YYYY-MM-DD` entry to `CHANGELOG.md` describing what changed.
+  Docs-only and CI-only changes don't bump.
 - Verify your changes and fix potential warnings/errors:
   - Check formatting: `dart format .`
   - Run static analysis: `flutter analyze`
@@ -37,6 +40,6 @@ We really appreciate contributions via GitHub pull requests. To contribute, take
 
 Send us your pull request:
 
-- Go to `https://github.com/Baseflow/octo_image` and click the "Compare & pull request" button.
+- Go to `https://github.com/Baseflow/octo_image` and click the "Compare & pull request" button, targeting `main`.
 
 Please make sure you solved all warnings and errors reported by the static code analysis and that you fill in the full pull request template. Failing to do so will result in us asking you to fix it.

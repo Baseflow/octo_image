@@ -108,11 +108,11 @@ Baseflow's open-source forking workflow:
 git remote add upstream git@github.com:Baseflow/octo_image.git
 ```
 
-4. Branch from latest `develop`:
+4. Branch from latest `main`:
 
 ```bash
 git fetch upstream
-git checkout upstream/develop -b <name_of_your_branch>
+git checkout upstream/main -b <name_of_your_branch>
 ```
 
 Expected remotes after setup:
@@ -162,24 +162,26 @@ Not covered directly: `FadeWidget`, `ImageHandler`, gapless playback
 
 ## Pull request workflow
 
-**`develop` is the branch of record.** Fork from `upstream/develop`, open every
-PR against `develop`, and rebase onto `develop` before submitting. `main` and
-`master` are leftovers from an earlier branch layout: they are not maintained,
-and must not be branched from or targeted. A move to a main-only model, matching
-Baseflow's other cache packages, is planned; until it lands, `develop` is the
-one to use.
+**`main` is the branch of record.** Fork from `upstream/main`, open every PR
+against `main`, and rebase onto `main` before submitting. `develop` and
+`master` are gone, and a ruleset blocks re-creating `develop`.
 
 This repo uses the **forking workflow**: contributors work on their own fork and
 open PRs to the main repository. Maintainers review and merge; do not push
 directly to `Baseflow/octo_image`.
 
-1. Apply changes on a branch based on `upstream/develop`.
-2. Verify locally:
+1. Apply changes on a branch based on `upstream/main`.
+2. Bump `version:` in `pubspec.yaml` following semver, and add a matching
+   `## [x.y.z] - YYYY-MM-DD` `CHANGELOG.md` entry describing the change
+   (format: see [Releases](#releases)). Date it with the day you open the PR;
+   a maintainer will correct it if it slips before tagging. Docs-only and
+   CI-only PRs don't bump.
+3. Verify locally:
    - `dart format .`
    - `flutter analyze`
    - `flutter test`
-3. Push to your fork: `git push origin <name_of_your_branch>`
-4. Open a PR against `Baseflow/octo_image` and fill out the full
+4. Push to your fork: `git push origin <name_of_your_branch>`
+5. Open a PR against `main` on `Baseflow/octo_image` and fill out the full
    [PR template](.github/PULL_REQUEST_TEMPLATE.md).
 
 Keep public API changes additive and non-breaking where possible; breaking
@@ -192,7 +194,7 @@ actual section headings verbatim — `What kind of change does this PR
 introduce?`, `What is the current behavior?`, `What is the new behavior (if
 this is a feature change)?`, `Does this PR introduce a breaking change?`,
 `Recommendations for testing`, `Links to relevant issues/docs`, and the
-`Checklist before submitting` with its exact four items. Do not substitute a
+`Checklist before submitting` with its exact five items. Do not substitute a
 different structure even for small or maintainer-authored PRs.
 
 Fill out the [PR template](.github/PULL_REQUEST_TEMPLATE.md), but keep each
@@ -213,24 +215,32 @@ The repository's own template checklist:
 - [ ] All projects build
 - [ ] Follows style guide lines
 - [ ] Relevant documentation was updated
-- [ ] Rebased onto current `develop`
+- [ ] Rebased onto current `main`
+- [ ] Version bumped in `pubspec.yaml` and dated `CHANGELOG.md` entry added
+      (skip for docs-only and CI-only changes)
 
 ## Releases
 
 One package, one tag scheme. Only maintainers cut releases.
 
-1. Open a release PR against `develop`: add an entry under a new dated
-   `## [x.y.z] - YYYY-MM-DD` heading in `CHANGELOG.md`, in the style already in
-   use (see below), and bump `version:` in `pubspec.yaml`.
+1. Confirm `main` is ready. Under the version-per-PR rule, every merged PR
+   already bumped `version:` in `pubspec.yaml` and added its `CHANGELOG.md`
+   entry (see [Pull request workflow](#pull-request-workflow)) — there is no
+   separate release-prep PR to land first.
 2. Verify: `dart format --set-exit-if-changed .`, `flutter analyze`,
    `flutter test`, and `dart pub publish --dry-run`.
-3. Merge once CI is green, then tag the resulting commit `vX.Y.Z`.
-4. Push the tag. **Pushing the tag is what publishes**: `build.yaml` runs
-   `dart pub publish` via pub.dev OIDC trusted publishing, gated on
-   `github.ref_type == 'tag'`. Never run `dart pub publish` by hand, and never
-   bump a version without a tag to match.
+3. Tag the merge commit on `main` `vX.Y.Z`. Push.
+
+**Pushing the tag is what publishes**: `build.yaml` runs `dart pub publish`
+via pub.dev OIDC trusted publishing, gated on `github.ref_type == 'tag'`. It
+does not bump versions and does not edit changelogs. Never run
+`dart pub publish` by hand, and never bump a version without a tag to match.
 
 `CHANGELOG.md` today uses `## [x.y.z] - YYYY-MM-DD` headings with `*` bullets
 and no `## [Unreleased]` section. Match that format; introducing an
 `[Unreleased]` section is a separate decision and not something to do as part
 of an unrelated change.
+
+Published versions are immutable, so keep branch names out of URLs in
+`pubspec.yaml` and in docs: a branch-specific link becomes a permanent dead
+link once that branch is gone.
