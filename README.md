@@ -1,8 +1,7 @@
 # OctoImage
 
-[![pub package](https://img.shields.io/pub/v/octo_image.svg)](https://pub.dartlang.org/packages/octo_image) 
-[![Build Status](https://app.bitrise.io/app/151357c29b430916/status.svg?token=U1ggYfh_wrBR0l5elPwryQ&branch=master)](https://app.bitrise.io/app/151357c29b430916)
-[![codecov](https://codecov.io/gh/Baseflow/octo_image/branch/master/graph/badge.svg)](https://codecov.io/gh/Baseflow/octo_image)
+[![pub package](https://img.shields.io/pub/v/octo_image.svg)](https://pub.dartlang.org/packages/octo_image)
+[![build](https://github.com/Baseflow/octo_image/actions/workflows/build.yaml/badge.svg)](https://github.com/Baseflow/octo_image/actions/workflows/build.yaml)
 
 An image library for showing placeholders, error widgets and transform your image.
 
