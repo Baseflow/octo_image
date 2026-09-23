@@ -12,6 +12,9 @@ on:
   pull_request:
     branches: [develop]
 
+env:
+  FLUTTER_VERSION: "3.47.4"
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   format:
@@ -33,6 +36,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
@@ -65,6 +69,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
@@ -104,6 +109,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
@@ -137,7 +143,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          architecture: x64
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
       # Download all Flutter packages
@@ -170,7 +176,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          architecture: x64
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
       # Enable platform support
@@ -208,6 +214,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
@@ -250,6 +257,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
@@ -293,6 +301,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
@@ -324,6 +333,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
@@ -380,6 +390,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
