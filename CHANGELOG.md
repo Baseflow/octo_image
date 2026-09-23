@@ -1,3 +1,8 @@
+## [2.1.0] - 2024-08-01
+* Raise the minimum SDK to Dart 3.0 and Flutter 3.10.
+* `alignment` accepts `AlignmentGeometry`, so `AlignmentDirectional` can be used.
+* Fix the fading-out widget never being removed when `fadeOutDuration` is `Duration.zero` (issue 34).
+
 ## [2.0.0] - 2023-09-25
 * Remove Blurhash dependency, see [in the readme](https://pub.dev/packages/octo_image#blurhash) how to keep using blurhash.
 
