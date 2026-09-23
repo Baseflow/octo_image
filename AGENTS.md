@@ -22,8 +22,8 @@ Conduct](CODE_OF_CONDUCT.md).
 ### Prerequisites
 
 - Basic Dart and Flutter knowledge
-- A working Flutter SDK installation, stable channel (see Commands below for
-  what CI actually installs)
+- A working Flutter SDK installation, stable channel, matching CI, currently
+  Flutter **3.47.4** (`FLUTTER_VERSION` in `.github/workflows/build.yaml`)
 - For running or building the example on iOS/macOS, access to a Mac is required
 - Android example builds require JDK 17
 
@@ -133,7 +133,10 @@ flutter analyze
 flutter test
 ```
 
-CI runs the same commands with stricter flags, on the Flutter stable channel:
+CI runs the same commands with stricter flags, on the pinned Flutter version
+above. Bump `FLUTTER_VERSION` in `.github/workflows/build.yaml` in its own PR,
+which needs a green run of its own, and keep it in step with the version
+`flutter_cache_manager` pins.
 
 ```bash
 dart format --set-exit-if-changed .
