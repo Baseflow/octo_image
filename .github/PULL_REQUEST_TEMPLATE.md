@@ -21,4 +21,5 @@
 - [ ] All projects build
 - [ ] Follows style guide lines 
 - [ ] Relevant documentation was updated
-- [ ] Rebased onto current develop
+- [ ] Rebased onto current main
+- [ ] Version bumped in pubspec.yaml and dated CHANGELOG.md entry added (skip for docs-only and CI-only changes)

@@ -8,7 +8,7 @@ An image library for showing placeholders, error widgets and transform your imag
 
 Recommended using with [CachedNetworkImage](https://pub.dev/packages/cached_network_image) version 2.2.0 or newer.
 
-<img src="https://raw.githubusercontent.com/Baseflow/octo_image/develop/resources/set-demo.gif" class="center"/>
+<img src="https://raw.githubusercontent.com/Baseflow/octo_image/v2.1.0/resources/set-demo.gif" class="center"/>
 
 ## Getting Started
 The OctoImage widget needs an [ImageProvider](#imageProviders) to show the image. 
