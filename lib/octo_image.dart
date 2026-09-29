@@ -1,5 +1,3 @@
-library octo_image;
-
 export 'src/errors.dart';
 export 'src/image/image.dart';
 export 'src/image_transformers.dart';

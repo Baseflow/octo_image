@@ -1,3 +1,7 @@
+## [2.1.2] - 2026-09-29
+* Update `flutter_lints` to 6.0.0 in the package and the example app.
+* Update the example app's `http` dependency to 1.6.0.
+
 ## [2.1.1] - 2026-09-23
 * Fix the README build badge and demo image, which pointed at a retired CI service and a branch that no longer exists.
 * Fix the example app's SDK and `flutter_lints` constraints, which excluded every SDK the package supports.
