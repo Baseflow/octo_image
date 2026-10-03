@@ -326,14 +326,21 @@ class _OctoImageState extends State<OctoImage> {
   @override
   void didUpdateWidget(OctoImage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.image != widget.image) {
-      if (widget.gaplessPlayback) {
-        _previousHandler = _imageHandler;
-        _previousHandler?.alwaysShowPlaceHolder = false;
-      } else {
-        _previousHandler = null;
-      }
+
+    final hasSameConfiguration =
+        // TODO: Remove this function once the ResizeImage equality issue is resolved.
+        // https://github.com/flutter/flutter/issues/172550
+        _isSameImageProvider(oldWidget.image, widget.image);
+
+    if (hasSameConfiguration) return;
+
+    if (widget.gaplessPlayback) {
+      _previousHandler = _imageHandler;
+      _previousHandler?.alwaysShowPlaceHolder = false;
+    } else {
+      _previousHandler = null;
     }
+
     _imageHandler = ImageHandler(
       image: widget.image,
       imageBuilder: widget.imageBuilder,
@@ -368,5 +375,14 @@ class _OctoImageState extends State<OctoImage> {
       height: widget.height,
       child: _imageHandler.build(context),
     );
+  }
+
+  bool _isSameImageProvider(ImageProvider a, ImageProvider b) {
+    if (a is ResizeImage && b is ResizeImage) {
+      return a.imageProvider == b.imageProvider &&
+          a.width == b.width &&
+          a.height == b.height;
+    }
+    return a == b;
   }
 }
