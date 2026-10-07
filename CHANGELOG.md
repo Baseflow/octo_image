@@ -1,3 +1,6 @@
+## [2.1.4] - 2026-10-07
+* Fix `gaplessPlayback` keeping every previous image alive. Only the last image that was shown is kept.
+
 ## [2.1.2] - 2026-09-29
 * Update `flutter_lints` to 6.0.0 in the package and the example app.
 * Update the example app's `http` dependency to 1.6.0.
