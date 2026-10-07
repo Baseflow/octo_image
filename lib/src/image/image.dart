@@ -299,7 +299,11 @@ class _OctoImageState extends State<OctoImage> {
   @override
   void initState() {
     super.initState();
-    _imageHandler = ImageHandler(
+    _imageHandler = _createHandler(widget);
+  }
+
+  ImageHandler _createHandler(OctoImage widget) {
+    return ImageHandler(
       image: widget.image,
       imageBuilder: widget.imageBuilder,
       placeholderBuilder: widget.placeholderBuilder,
@@ -328,8 +332,11 @@ class _OctoImageState extends State<OctoImage> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.image != widget.image) {
       if (widget.gaplessPlayback) {
-        _previousHandler = _imageHandler;
-        _previousHandler?.alwaysShowPlaceHolder = false;
+        // Keep the last image that actually showed, in a fresh handler so it
+        // doesn't hold on to the handler before it.
+        if (_imageHandler.isLoaded) {
+          _previousHandler = _createHandler(oldWidget);
+        }
       } else {
         _previousHandler = null;
       }

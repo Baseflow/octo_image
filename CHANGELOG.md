@@ -1,3 +1,6 @@
+## [2.1.4] - 2026-10-29
+* Fix `gaplessPlayback` keeping every previous image alive. Only the last image that was shown is kept.
+
 ## [2.1.3] - 2026-10-29
 * Dispose FadeWidget's CurvedAnimation, which leaked on every fade.
 * A fade curve or duration changed while the same child is fading, such as a new
