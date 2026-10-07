@@ -130,7 +130,7 @@ class ImageHandler {
 
   /// Indicates that placeholder should always be shown, even if the image
   /// was loaded in the first frame.
-  bool alwaysShowPlaceHolder;
+  final bool alwaysShowPlaceHolder;
 
   ImageHandler({
     required this.image,
@@ -219,6 +219,7 @@ class ImageHandler {
 
   Widget _imageBuilder(BuildContext context, Widget child, int? frame,
       bool wasSynchronouslyLoaded) {
+    _isLoaded = frame != null;
     if (frame == null) {
       return child;
     }
@@ -227,6 +228,7 @@ class ImageHandler {
 
   Widget _placeholderBuilder(BuildContext context, Widget child, int? frame,
       bool wasSynchronouslyLoaded) {
+    _isLoaded = frame != null;
     if (frame == null) {
       if (placeholderFadeInDuration != Duration.zero) {
         return FadeWidget(
@@ -249,6 +251,9 @@ class ImageHandler {
 
   bool _wasSynchronouslyLoaded = false;
   bool _isLoaded = false;
+
+  /// Whether the image has shown its first frame.
+  bool get isLoaded => _isLoaded;
 
   Widget _preLoadingBuilder(BuildContext context, Widget child, int? frame,
       bool wasSynchronouslyLoaded) {
