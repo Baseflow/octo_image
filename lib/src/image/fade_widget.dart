@@ -40,6 +40,7 @@ class _FadeWidgetState extends State<FadeWidget>
     with SingleTickerProviderStateMixin {
   late Animation<double> opacity;
   late AnimationController controller;
+  late CurvedAnimation _curved;
   late bool hideWidget;
 
   @override
@@ -58,10 +59,10 @@ class _FadeWidgetState extends State<FadeWidget>
   void initState() {
     super.initState();
     controller = AnimationController(duration: widget.duration, vsync: this);
-    final curved = CurvedAnimation(parent: controller, curve: widget.curve);
+    _curved = CurvedAnimation(parent: controller, curve: widget.curve);
     var begin = widget.direction == AnimationDirection.forward ? 0.0 : 1.0;
     var end = widget.direction == AnimationDirection.forward ? 1.0 : 0.0;
-    opacity = Tween<double>(begin: begin, end: end).animate(curved);
+    opacity = Tween<double>(begin: begin, end: end).animate(_curved);
     controller.forward();
 
     hideWidget = false;
@@ -81,10 +82,11 @@ class _FadeWidgetState extends State<FadeWidget>
     opacity.removeStatusListener(animationStatusChange);
     controller.duration = widget.duration;
     controller.value = 0;
-    final curved = CurvedAnimation(parent: controller, curve: widget.curve);
+    _curved.dispose();
+    _curved = CurvedAnimation(parent: controller, curve: widget.curve);
     var begin = widget.direction == AnimationDirection.forward ? 0.0 : 1.0;
     var end = widget.direction == AnimationDirection.forward ? 1.0 : 0.0;
-    opacity = Tween<double>(begin: begin, end: end).animate(curved);
+    opacity = Tween<double>(begin: begin, end: end).animate(_curved);
     controller.forward();
 
     hideWidget = false;
@@ -100,6 +102,7 @@ class _FadeWidgetState extends State<FadeWidget>
   @override
   void dispose() {
     opacity.removeStatusListener(animationStatusChange);
+    _curved.dispose();
     controller.dispose();
     super.dispose();
   }
