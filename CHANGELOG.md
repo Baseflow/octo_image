@@ -1,3 +1,6 @@
+## [2.1.3] - 2026-10-07
+* Dispose FadeWidget's CurvedAnimation, which leaked on every fade.
+
 ## [2.1.2] - 2026-09-29
 * Update `flutter_lints` to 6.0.0 in the package and the example app.
 * Update the example app's `http` dependency to 1.6.0.
