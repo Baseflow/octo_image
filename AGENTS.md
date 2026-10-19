@@ -155,12 +155,12 @@ Before finishing work, run the same checks CI runs (format, analyze, test).
 
 ## Testing expectations
 
-Four files under `test/`: `octo_image_test.dart` and `templates_test.dart`
+Five files under `test/`: `octo_image_test.dart` and `templates_test.dart`
 exercise the widget and the prebuilt builders, using `MockImageProvider` and a
-transparent-image byte fixture under `test/helpers/`. There are no golden
-tests.
+transparent-image byte fixture under `test/helpers/`. `fade_widget_test.dart`
+leak-tests `FadeWidget`. There are no golden tests.
 
-Not covered directly: `FadeWidget`, `ImageHandler`, gapless playback
+Not covered directly: `ImageHandler`, gapless playback
 (`didUpdateWidget`), the `OctoSet` factories, and `OctoImage.fromSet`.
 
 ## Pull request workflow

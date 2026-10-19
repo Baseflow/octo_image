@@ -40,7 +40,7 @@ class _FadeWidgetState extends State<FadeWidget>
     with SingleTickerProviderStateMixin {
   late Animation<double> opacity;
   late AnimationController controller;
-  late CurvedAnimation _curved;
+  late CurvedAnimation curved;
   late bool hideWidget;
 
   @override
@@ -59,20 +59,8 @@ class _FadeWidgetState extends State<FadeWidget>
   void initState() {
     super.initState();
     controller = AnimationController(duration: widget.duration, vsync: this);
-    _curved = CurvedAnimation(parent: controller, curve: widget.curve);
-    var begin = widget.direction == AnimationDirection.forward ? 0.0 : 1.0;
-    var end = widget.direction == AnimationDirection.forward ? 1.0 : 0.0;
-    opacity = Tween<double>(begin: begin, end: end).animate(_curved);
-    controller.forward();
-
-    hideWidget = false;
-    if (widget.direction == AnimationDirection.reverse) {
-      if (widget.duration == Duration.zero) {
-        hideWidget = true;
-      } else {
-        opacity.addStatusListener(animationStatusChange);
-      }
-    }
+    curved = CurvedAnimation(parent: controller, curve: widget.curve);
+    _startAnimation();
   }
 
   @override
@@ -82,11 +70,22 @@ class _FadeWidgetState extends State<FadeWidget>
     opacity.removeStatusListener(animationStatusChange);
     controller.duration = widget.duration;
     controller.value = 0;
-    _curved.dispose();
-    _curved = CurvedAnimation(parent: controller, curve: widget.curve);
+    curved.curve = widget.curve;
+    _startAnimation();
+  }
+
+  @override
+  void dispose() {
+    opacity.removeStatusListener(animationStatusChange);
+    curved.dispose();
+    controller.dispose();
+    super.dispose();
+  }
+
+  void _startAnimation() {
     var begin = widget.direction == AnimationDirection.forward ? 0.0 : 1.0;
     var end = widget.direction == AnimationDirection.forward ? 1.0 : 0.0;
-    opacity = Tween<double>(begin: begin, end: end).animate(_curved);
+    opacity = Tween<double>(begin: begin, end: end).animate(curved);
     controller.forward();
 
     hideWidget = false;
@@ -97,14 +96,6 @@ class _FadeWidgetState extends State<FadeWidget>
         opacity.addStatusListener(animationStatusChange);
       }
     }
-  }
-
-  @override
-  void dispose() {
-    opacity.removeStatusListener(animationStatusChange);
-    _curved.dispose();
-    controller.dispose();
-    super.dispose();
   }
 
   void animationStatusChange(AnimationStatus status) {

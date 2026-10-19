@@ -13,8 +13,24 @@ void main() {
     (tester) async {
       await tester.pumpWidget(const FadeWidget(child: SizedBox()));
       // A child of another type can't update the old one, so
-      // didUpdateWidget builds a new CurvedAnimation.
+      // didUpdateWidget restarts the animation.
       await tester.pumpWidget(const FadeWidget(child: Placeholder()));
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
+
+  testWidgets(
+    'FadeWidget disposes its CurvedAnimation when fading out',
+    experimentalLeakTesting: LeakTesting.settings.withTrackedAll(),
+    (tester) async {
+      const reverse = AnimationDirection.reverse;
+      await tester
+          .pumpWidget(const FadeWidget(direction: reverse, child: SizedBox()));
+      await tester.pumpWidget(
+          const FadeWidget(direction: reverse, child: Placeholder()));
+      await tester.pumpAndSettle();
+      // The status listener hides the child once the fade-out completes.
+      expect(find.byType(Placeholder), findsNothing);
       await tester.pumpWidget(const SizedBox());
     },
   );
