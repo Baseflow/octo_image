@@ -39,8 +39,8 @@ class FadeWidget extends StatefulWidget {
 class _FadeWidgetState extends State<FadeWidget>
     with SingleTickerProviderStateMixin {
   late Animation<double> opacity;
-  late AnimationController controller;
-  late CurvedAnimation curved;
+  late final AnimationController controller;
+  late final CurvedAnimation curved;
   late bool hideWidget;
 
   @override
@@ -66,11 +66,11 @@ class _FadeWidgetState extends State<FadeWidget>
   @override
   void didUpdateWidget(FadeWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
+    controller.duration = widget.duration;
+    curved.curve = widget.curve;
     if (Widget.canUpdate(oldWidget.child, widget.child)) return;
     opacity.removeStatusListener(animationStatusChange);
-    controller.duration = widget.duration;
     controller.value = 0;
-    curved.curve = widget.curve;
     _startAnimation();
   }
 

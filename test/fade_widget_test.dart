@@ -34,4 +34,16 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     },
   );
+
+  testWidgets('FadeWidget applies a new curve mid-fade', (tester) async {
+    const duration = Duration(milliseconds: 100);
+    await tester.pumpWidget(const FadeWidget(
+        duration: duration, curve: Curves.linear, child: SizedBox()));
+    await tester.pump(const Duration(milliseconds: 50));
+    // Same child, so the fade continues instead of restarting.
+    await tester.pumpWidget(const FadeWidget(
+        duration: duration, curve: Curves.easeIn, child: SizedBox()));
+    final fade = tester.widget<FadeTransition>(find.byType(FadeTransition));
+    expect(fade.opacity.value, Curves.easeIn.transform(0.5));
+  });
 }
