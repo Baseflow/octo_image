@@ -1,0 +1,87 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
+
+import 'package:octo_image/src/image/fade_widget.dart';
+
+void main() {
+  LeakTesting.enable();
+  LeakTesting.settings = LeakTesting.settings.withTrackedAll();
+
+  for (final direction in AnimationDirection.values) {
+    final reverse = direction == AnimationDirection.reverse;
+    // The status listener hides the child once a fade-out completes.
+    final settled = reverse ? findsNothing : findsOneWidget;
+
+    testWidgets('FadeWidget disposes its CurvedAnimation (${direction.name})',
+        (tester) async {
+      await tester.pumpWidget(
+          FadeWidget(direction: direction, child: const SizedBox()));
+      // A child of another type can't update the old one, so
+      // didUpdateWidget restarts the animation.
+      await tester.pumpWidget(
+          FadeWidget(direction: direction, child: const Placeholder()));
+      await tester.pumpAndSettle();
+      expect(find.byType(Placeholder), settled);
+      await tester.pumpWidget(const SizedBox());
+    });
+
+    testWidgets('FadeWidget applies a new curve mid-fade (${direction.name})',
+        (tester) async {
+      Widget fade(Curve curve) => FadeWidget(
+          direction: direction,
+          duration: const Duration(milliseconds: 100),
+          curve: curve,
+          child: const Placeholder());
+      await tester.pumpWidget(fade(Curves.linear));
+      await tester.pump(const Duration(milliseconds: 50));
+      // Same child, so the fade continues instead of restarting.
+      await tester.pumpWidget(fade(Curves.easeIn));
+      final eased = Curves.easeIn.transform(0.5);
+      final opacity =
+          tester.widget<FadeTransition>(find.byType(FadeTransition)).opacity;
+      expect(opacity.value, reverse ? 1 - eased : eased);
+      await tester.pumpAndSettle();
+      expect(find.byType(Placeholder), settled);
+      await tester.pumpWidget(const SizedBox());
+    });
+
+    testWidgets(
+        'FadeWidget applies a new duration mid-fade (${direction.name})',
+        (tester) async {
+      Widget fade(int ms) => FadeWidget(
+          direction: direction,
+          duration: Duration(milliseconds: ms),
+          curve: Curves.linear,
+          child: const Placeholder());
+      await tester.pumpWidget(fade(100));
+      await tester.pump(const Duration(milliseconds: 50));
+      // The remaining half now takes half of 200ms instead of half of 100ms.
+      await tester.pumpWidget(fade(200));
+      await tester.pump(const Duration(milliseconds: 50));
+      final opacity =
+          tester.widget<FadeTransition>(find.byType(FadeTransition)).opacity;
+      expect(opacity.value, reverse ? 0.25 : 0.75);
+      await tester.pumpAndSettle();
+      expect(find.byType(Placeholder), settled);
+      await tester.pumpWidget(const SizedBox());
+    });
+
+    testWidgets(
+        'FadeWidget finishes at once on Duration.zero (${direction.name})',
+        (tester) async {
+      Widget fade(Duration duration) => FadeWidget(
+          direction: direction, duration: duration, child: const Placeholder());
+      await tester.pumpWidget(fade(const Duration(milliseconds: 100)));
+      await tester.pump(const Duration(milliseconds: 50));
+      await tester.pumpWidget(fade(Duration.zero));
+      expect(find.byType(Placeholder), settled);
+      if (!reverse) {
+        final opacity =
+            tester.widget<FadeTransition>(find.byType(FadeTransition)).opacity;
+        expect(opacity.value, 1);
+      }
+      await tester.pumpWidget(const SizedBox());
+    });
+  }
+}
