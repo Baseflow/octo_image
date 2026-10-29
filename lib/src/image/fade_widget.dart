@@ -68,7 +68,14 @@ class _FadeWidgetState extends State<FadeWidget>
     super.didUpdateWidget(oldWidget);
     controller.duration = widget.duration;
     curved.curve = widget.curve;
-    if (Widget.canUpdate(oldWidget.child, widget.child)) return;
+    if (Widget.canUpdate(oldWidget.child, widget.child)) {
+      // Setting duration alone only affects the next run; forward() resumes
+      // from the current value with the new one.
+      if (controller.isAnimating && widget.duration != oldWidget.duration) {
+        controller.forward();
+      }
+      return;
+    }
     opacity.removeStatusListener(animationStatusChange);
     controller.value = 0;
     _startAnimation();

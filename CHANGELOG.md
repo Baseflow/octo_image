@@ -1,5 +1,8 @@
 ## [2.1.3] - 2026-10-07
 * Dispose FadeWidget's CurvedAnimation, which leaked on every fade.
+* A fade curve or duration changed while the same child is fading, such as a new
+  `fadeOutCurve` passed to `OctoImage`, now applies to that fade. Before, it was
+  ignored. A new curve can make the opacity jump for one frame.
 
 ## [2.1.2] - 2026-09-29
 * Update `flutter_lints` to 6.0.0 in the package and the example app.

@@ -45,5 +45,43 @@ void main() {
       expect(find.byType(Placeholder), settled);
       await tester.pumpWidget(const SizedBox());
     });
+
+    testWidgets(
+        'FadeWidget applies a new duration mid-fade (${direction.name})',
+        (tester) async {
+      Widget fade(int ms) => FadeWidget(
+          direction: direction,
+          duration: Duration(milliseconds: ms),
+          curve: Curves.linear,
+          child: const Placeholder());
+      await tester.pumpWidget(fade(100));
+      await tester.pump(const Duration(milliseconds: 50));
+      // The remaining half now takes half of 200ms instead of half of 100ms.
+      await tester.pumpWidget(fade(200));
+      await tester.pump(const Duration(milliseconds: 50));
+      final opacity =
+          tester.widget<FadeTransition>(find.byType(FadeTransition)).opacity;
+      expect(opacity.value, reverse ? 0.25 : 0.75);
+      await tester.pumpAndSettle();
+      expect(find.byType(Placeholder), settled);
+      await tester.pumpWidget(const SizedBox());
+    });
+
+    testWidgets(
+        'FadeWidget finishes at once on Duration.zero (${direction.name})',
+        (tester) async {
+      Widget fade(Duration duration) => FadeWidget(
+          direction: direction, duration: duration, child: const Placeholder());
+      await tester.pumpWidget(fade(const Duration(milliseconds: 100)));
+      await tester.pump(const Duration(milliseconds: 50));
+      await tester.pumpWidget(fade(Duration.zero));
+      expect(find.byType(Placeholder), settled);
+      if (!reverse) {
+        final opacity =
+            tester.widget<FadeTransition>(find.byType(FadeTransition)).opacity;
+        expect(opacity.value, 1);
+      }
+      await tester.pumpWidget(const SizedBox());
+    });
   }
 }
