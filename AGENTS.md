@@ -88,7 +88,11 @@ Two things to know before changing `ImageHandler` or `OctoSet`:
   both.
 - **`ImageHandler` carries mutable state across callbacks.**
   `_wasSynchronouslyLoaded` and `_isLoaded` are written by one callback
-  (`_preLoadingBuilder`) and read by another (`_loadingBuilder`). Gapless
+  (`_preLoadingBuilder`) and read by another (`_loadingBuilder`). `_isLoaded`
+  is also written by `_imageBuilder` and `_placeholderBuilder`, and
+  `_OctoImageState.didUpdateWidget` reads it through the `isLoaded` getter to
+  decide whether to keep the old image for gapless playback. It is a side
+  effect of the last build, so it only says what was on screen. Gapless
   playback lives in `_OctoImageState.didUpdateWidget`, which rebuilds the
   `ImageHandler` on every widget update rather than only when the inputs
   actually changed; that behavior is the subject of an open pull request, so
@@ -155,13 +159,15 @@ Before finishing work, run the same checks CI runs (format, analyze, test).
 
 ## Testing expectations
 
-Five files under `test/`: `octo_image_test.dart` and `templates_test.dart`
+Four test files under `test/`: `octo_image_test.dart` and `templates_test.dart`
 exercise the widget and the prebuilt builders, using `MockImageProvider` and a
 transparent-image byte fixture under `test/helpers/`. `fade_widget_test.dart`
-leak-tests `FadeWidget`. There are no golden tests.
+leak-tests `FadeWidget`. `gapless_playback_test.dart` covers gapless playback
+(`didUpdateWidget`): which images stay in the tree across swaps, and that
+replaced images can be garbage collected. There are no golden tests.
 
-Not covered directly: `ImageHandler`, gapless playback
-(`didUpdateWidget`), the `OctoSet` factories, and `OctoImage.fromSet`.
+Not covered directly: `ImageHandler`, the `OctoSet` factories, and
+`OctoImage.fromSet`.
 
 ## Pull request workflow
 

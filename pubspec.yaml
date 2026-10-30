@@ -15,4 +15,5 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  leak_tracker: any
   leak_tracker_flutter_testing: any

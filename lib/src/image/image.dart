@@ -302,12 +302,16 @@ class _OctoImageState extends State<OctoImage> {
     _imageHandler = _createHandler(widget);
   }
 
-  ImageHandler _createHandler(OctoImage widget) {
+  /// Shows [previous] in place of the placeholder or progress indicator when
+  /// given.
+  ImageHandler _createHandler(OctoImage widget, {ImageHandler? previous}) {
     return ImageHandler(
       image: widget.image,
       imageBuilder: widget.imageBuilder,
-      placeholderBuilder: widget.placeholderBuilder,
-      progressIndicatorBuilder: widget.progressIndicatorBuilder,
+      placeholderBuilder:
+          previous != null ? previous.build : widget.placeholderBuilder,
+      progressIndicatorBuilder:
+          previous != null ? null : widget.progressIndicatorBuilder,
       errorBuilder: widget.errorBuilder,
       placeholderFadeInDuration: widget.placeholderFadeInDuration,
       fadeOutDuration: widget.fadeOutDuration,
@@ -323,7 +327,7 @@ class _OctoImageState extends State<OctoImage> {
       colorBlendMode: widget.colorBlendMode,
       matchTextDirection: widget.matchTextDirection,
       filterQuality: widget.filterQuality,
-      alwaysShowPlaceHolder: false,
+      alwaysShowPlaceHolder: previous != null,
     );
   }
 
@@ -341,31 +345,7 @@ class _OctoImageState extends State<OctoImage> {
         _previousHandler = null;
       }
     }
-    _imageHandler = ImageHandler(
-      image: widget.image,
-      imageBuilder: widget.imageBuilder,
-      placeholderBuilder: _previousHandler != null
-          ? _previousHandler!.build
-          : widget.placeholderBuilder,
-      progressIndicatorBuilder:
-          _previousHandler != null ? null : widget.progressIndicatorBuilder,
-      errorBuilder: widget.errorBuilder,
-      placeholderFadeInDuration: widget.placeholderFadeInDuration,
-      fadeOutDuration: widget.fadeOutDuration,
-      fadeOutCurve: widget.fadeOutCurve,
-      fadeInDuration: widget.fadeInDuration,
-      fadeInCurve: widget.fadeInCurve,
-      fit: widget.fit,
-      width: widget.width,
-      height: widget.height,
-      alignment: widget.alignment,
-      repeat: widget.repeat,
-      color: widget.color,
-      colorBlendMode: widget.colorBlendMode,
-      matchTextDirection: widget.matchTextDirection,
-      filterQuality: widget.filterQuality,
-      alwaysShowPlaceHolder: _previousHandler != null,
-    );
+    _imageHandler = _createHandler(widget, previous: _previousHandler);
   }
 
   @override
