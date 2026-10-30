@@ -1,3 +1,10 @@
+## [2.1.4] - 2026-10-29
+* Fix `gaplessPlayback` keeping every previous image alive. At most one previous image is kept: the last one that was shown.
+  This changes what fast swaps show. If the image changes again before the new one has
+  shown, that image is skipped: the last image that was shown stays until the newest one
+  loads, even if the skipped image finishes loading first. If the first image changes
+  before it has shown, the placeholder or progress indicator is shown instead of that image.
+
 ## [2.1.3] - 2026-10-29
 * Dispose FadeWidget's CurvedAnimation, which leaked on every fade.
 * A fade curve or duration changed while the same child is fading, such as a new
