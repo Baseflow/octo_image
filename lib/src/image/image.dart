@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../octo_set.dart';
 import 'image_handler.dart';
+import 'image_load_observer.dart';
 
 typedef OctoImageBuilder = Widget Function(BuildContext context, Widget child);
 typedef OctoPlaceholderBuilder = Widget Function(BuildContext context);
@@ -14,6 +15,37 @@ typedef OctoErrorBuilder = Widget Function(
   Object error,
   StackTrace? stackTrace,
 );
+typedef OctoLoadedCallback = void Function(OctoImageLoadInfo info);
+typedef OctoLoadErrorCallback = void Function(
+  Object error,
+  StackTrace? stackTrace,
+);
+
+/// Information about an image that finished loading, passed to
+/// [OctoImage.onLoaded].
+@immutable
+class OctoImageLoadInfo {
+  const OctoImageLoadInfo({
+    required this.size,
+    required this.elapsed,
+    required this.synchronousCall,
+  });
+
+  /// Size of the decoded image in pixels.
+  final Size size;
+
+  /// Time from the moment [OctoImage] started loading the image until its
+  /// first frame was decoded.
+  final Duration elapsed;
+
+  /// Whether the image was already decoded, for example because it was in the
+  /// [ImageCache], so it was available as soon as loading started.
+  final bool synchronousCall;
+
+  @override
+  String toString() => 'OctoImageLoadInfo(size: $size, elapsed: $elapsed, '
+      'synchronousCall: $synchronousCall)';
+}
 
 /// OctoImage can be used as a replacement of [Image]. It can be used with any
 /// [ImageProvider], but works best with [CachedNetworkImageProvider](https://pub.dev/packages/cached_network_image).
@@ -37,6 +69,17 @@ class OctoImage extends StatefulWidget {
 
   /// Widget displayed while the target [imageUrl] failed loading.
   final OctoErrorBuilder? errorBuilder;
+
+  /// Called once the first frame of [image] is decoded, with how long that
+  /// took. Called again when [image] changes.
+  final OctoLoadedCallback? onLoaded;
+
+  /// Called when [image] fails to load. Called again when [image] changes.
+  ///
+  /// Setting this marks the error as handled, like [errorBuilder] does. In
+  /// release builds without an [errorBuilder], Flutter then no longer reports
+  /// the error to [FlutterError.onError].
+  final OctoLoadErrorCallback? onLoadError;
 
   /// The duration of the fade-in animation for the [placeholderBuilder].
   final Duration placeholderFadeInDuration;
@@ -161,6 +204,9 @@ class OctoImage extends StatefulWidget {
   /// When the [image] failed loading the [errorBuilder] is called with the
   /// error and stacktrace. This can be used to show an error widget.
   ///
+  /// [onLoaded] and [onLoadError] notify you when the image finished or failed
+  /// loading, for example to measure load times.
+  ///
   /// Either the [width] and [height] arguments should be specified, or the
   /// widget should be placed in a context that sets tight layout constraints.
   /// Otherwise, the image dimensions will change as the image is loaded, which
@@ -185,6 +231,8 @@ class OctoImage extends StatefulWidget {
     this.placeholderBuilder,
     this.progressIndicatorBuilder,
     this.errorBuilder,
+    this.onLoaded,
+    this.onLoadError,
     Duration? fadeOutDuration,
     Curve? fadeOutCurve,
     Duration? fadeInDuration,
@@ -251,6 +299,8 @@ class OctoImage extends StatefulWidget {
     super.key,
     required ImageProvider image,
     required OctoSet octoSet,
+    this.onLoaded,
+    this.onLoadError,
     Duration? fadeOutDuration,
     Curve? fadeOutCurve,
     Duration? fadeInDuration,
@@ -295,6 +345,7 @@ class OctoImage extends StatefulWidget {
 class _OctoImageState extends State<OctoImage> {
   ImageHandler? _previousHandler;
   late ImageHandler _imageHandler;
+  ImageLoadObserver? _loadObserver;
 
   @override
   void initState() {
@@ -324,8 +375,48 @@ class _OctoImageState extends State<OctoImage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _observeLoad(imageChanged: false);
+  }
+
+  @override
+  void dispose() {
+    _loadObserver?.dispose();
+    super.dispose();
+  }
+
+  /// Points [ImageLoadObserver] at the image the first time a load callback
+  /// is set and whenever the image changes, so each image is reported once.
+  void _observeLoad({required bool imageChanged}) {
+    final handlesErrors = widget.onLoadError != null;
+    final observer = _loadObserver;
+    if (observer != null && !imageChanged) {
+      observer.handlesErrors = handlesErrors;
+      return;
+    }
+    if (observer == null && widget.onLoaded == null && !handlesErrors) return;
+    // Same configuration as Image, so both get the same stream.
+    final width = widget.width;
+    final height = widget.height;
+    (_loadObserver ??= ImageLoadObserver(
+      onLoaded: () => widget.onLoaded,
+      onLoadError: () => widget.onLoadError,
+    ))
+        .resolve(
+      widget.image,
+      createLocalImageConfiguration(
+        context,
+        size: width != null && height != null ? Size(width, height) : null,
+      ),
+      handlesErrors: handlesErrors,
+    );
+  }
+
+  @override
   void didUpdateWidget(OctoImage oldWidget) {
     super.didUpdateWidget(oldWidget);
+    _observeLoad(imageChanged: oldWidget.image != widget.image);
     if (oldWidget.image != widget.image) {
       if (widget.gaplessPlayback) {
         _previousHandler = _imageHandler;
