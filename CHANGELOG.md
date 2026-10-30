@@ -1,3 +1,8 @@
+## [2.2.0] - 2026-10-30
+* Add `onLoaded` and `onLoadError` to `OctoImage` and `OctoImage.fromSet`.
+  `onLoaded` gets an `OctoImageLoadInfo` with the decoded image size and the
+  time from the start of loading to the first decoded frame.
+
 ## [2.1.3] - 2026-10-29
 * Dispose FadeWidget's CurvedAnimation, which leaked on every fade.
 * A fade curve or duration changed while the same child is fading, such as a new
