@@ -64,6 +64,8 @@ assembled from.
 - Core widget: `lib/src/image/image.dart` (`OctoImage`, the four builder typedefs)
 - Adapter/engine, not exported: `lib/src/image/image_handler.dart` (`ImageHandler`)
 - Cross-fade, not exported: `lib/src/image/fade_widget.dart` (`FadeWidget`)
+- Load notifications, not exported: `lib/src/image/image_load_observer.dart`
+  (`ImageLoadObserver`, behind `onLoaded` / `onLoadError`)
 - Builder bundle: `lib/src/octo_set.dart` (`OctoSet`)
 - Prebuilt placeholders: `lib/src/placeholders.dart` (`OctoPlaceholder`)
 - Prebuilt progress indicators: `lib/src/progress_indicators.dart` (`OctoProgressIndicator`)
@@ -80,6 +82,9 @@ assembled from.
   the matching file in the list above, following the existing static-factory
   style
 - **Cross-fade behavior** → `lib/src/image/fade_widget.dart`
+- **Load and error notifications** → `lib/src/image/image_load_observer.dart`.
+  It listens to the `ImageStream` itself, so keep this out of `ImageHandler`,
+  whose builders run during build.
 
 Two things to know before changing `ImageHandler` or `OctoSet`:
 
@@ -162,12 +167,15 @@ Before finishing work, run the same checks CI runs (format, analyze, test).
 
 ## Testing expectations
 
-Four test files under `test/`: `octo_image_test.dart` and `templates_test.dart`
+Five test files under `test/`: `octo_image_test.dart` and `templates_test.dart`
 exercise the widget and the prebuilt builders, using `MockImageProvider` and a
 transparent-image byte fixture under `test/helpers/`. `fade_widget_test.dart`
 leak-tests `FadeWidget`. `gapless_playback_test.dart` covers gapless playback
 (`didUpdateWidget`): which images stay in the tree across swaps, and that
-replaced images can be garbage collected. There are no golden tests.
+replaced images can be garbage collected. `load_callbacks_test.dart` covers
+`onLoaded` and `onLoadError`; the mock loads on the fake test clock but decodes
+on real time, so it advances both (see `_settle` there). There are no golden
+tests.
 
 CI also runs `flutter test` on `LEGACY_FLUTTER_VERSION`, a Flutter before 3.38.
 Only there does `ResizeImage` lack a value `==`, so only there do the memCache

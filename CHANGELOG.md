@@ -1,3 +1,8 @@
+## [2.2.0] - 2026-11-12
+* Add `onLoaded` and `onLoadError` to `OctoImage` and `OctoImage.fromSet`.
+  `onLoaded` gets an `OctoImageLoadInfo` with the decoded image size and the
+  time from the start of loading to the first decoded frame.
+
 ## [2.1.5] - 2026-11-12
 * Rebuilding `OctoImage` with the same `image` and `memCacheWidth`/`memCacheHeight`
   no longer reloads the image and replays its placeholder fade on Flutter versions
