@@ -251,9 +251,10 @@ class ImageHandler {
 
   bool _wasSynchronouslyLoaded = false;
   bool _isLoaded = false;
+  bool _hasShownError = false;
 
-  /// Whether the image has shown its first frame.
-  bool get isLoaded => _isLoaded;
+  /// Whether the image has shown its first frame or the error widget.
+  bool get hasShown => _isLoaded || _hasShownError;
 
   Widget _preLoadingBuilder(BuildContext context, Widget child, int? frame,
       bool wasSynchronouslyLoaded) {
@@ -301,6 +302,7 @@ class ImageHandler {
     if (errorBuilder == null) {
       throw StateError('Try to build errorBuilder with errorBuilder null');
     }
+    _hasShownError = true;
     return errorBuilder!(context, error, stacktrace);
   }
 

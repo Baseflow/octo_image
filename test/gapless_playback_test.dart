@@ -17,6 +17,7 @@ Widget _app(ImageProvider image, {required bool progress}) => MaterialApp(
           placeholderBuilder: progress ? null : (_) => const Placeholder(),
           progressIndicatorBuilder:
               progress ? (_, __) => const CircularProgressIndicator() : null,
+          errorBuilder: (_, __, ___) => const Icon(Icons.error),
         ),
       ),
     );
@@ -34,6 +35,17 @@ class _NeverLoads extends ImageProvider<_NeverLoads> {
   ImageStreamCompleter loadImage(
           _NeverLoads key, ImageDecoderCallback decode) =>
       OneFrameImageStreamCompleter(Completer<ImageInfo>().future);
+}
+
+/// An image whose load always fails.
+class _Fails extends ImageProvider<_Fails> {
+  @override
+  Future<_Fails> obtainKey(ImageConfiguration configuration) =>
+      SynchronousFuture(this);
+
+  @override
+  ImageStreamCompleter loadImage(_Fails key, ImageDecoderCallback decode) =>
+      OneFrameImageStreamCompleter(Future.error(StateError('fails')));
 }
 
 List<ImageProvider> _imagesInTree() => find
@@ -105,6 +117,31 @@ void main() {
         ..clearLiveImages();
       await tester.runAsync(() => forceGC(fullGcCycles: 2));
       expect(a.target, isNull);
+
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets(
+        'gaplessPlayback keeps a shown error over older images ($builder)',
+        (tester) async {
+      final a = _memoryImage();
+      await tester.pumpWidget(const MaterialApp(home: SizedBox()));
+      final context = tester.element(find.byType(SizedBox));
+      await tester.runAsync(() => precacheImage(a, context));
+      await tester.pumpWidget(_app(a, progress: progress));
+
+      final b = _Fails();
+      await tester.pumpWidget(_app(b, progress: progress));
+      await tester.pump();
+      expect(find.byIcon(Icons.error), findsOneWidget);
+
+      // The error replaced A on screen, so it stays while C loads.
+      final c = _NeverLoads();
+      await tester.pumpWidget(_app(c, progress: progress));
+      await tester.pump();
+
+      expect(_imagesInTree(), [c, b]);
+      expect(find.byIcon(Icons.error), findsOneWidget);
 
       await tester.pumpAndSettle();
     });
