@@ -90,9 +90,10 @@ Two things to know before changing `ImageHandler` or `OctoSet`:
   `_wasSynchronouslyLoaded` and `_isLoaded` are written by one callback
   (`_preLoadingBuilder`) and read by another (`_loadingBuilder`). `_isLoaded`
   is also written by `_imageBuilder` and `_placeholderBuilder`, and
-  `_OctoImageState.didUpdateWidget` reads it through the `isLoaded` getter to
-  decide whether to keep the old image for gapless playback. It is a side
-  effect of the last build, so it only says what was on screen. Gapless
+  `_hasShownError` by `_errorBuilder`. `_OctoImageState.didUpdateWidget` reads
+  both through the `hasShown` getter to decide whether to keep the old image
+  (or error widget) for gapless playback. They are side effects of the last
+  build, so they only say what was on screen. Gapless
   playback lives in `_OctoImageState.didUpdateWidget`, which rebuilds the
   `ImageHandler` on every widget update rather than only when the inputs
   actually changed; that behavior is the subject of an open pull request, so
