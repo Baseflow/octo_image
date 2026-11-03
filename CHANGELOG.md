@@ -1,3 +1,8 @@
+## [Unreleased]
+* Rebuilding `OctoImage` with the same `image` and `memCacheWidth`/`memCacheHeight`
+  no longer reloads the image and replays its placeholder fade on Flutter versions
+  before 3.38, where `ResizeImage` has no `==`.
+
 ## [2.1.4] - 2026-11-09
 * Fix `gaplessPlayback` keeping every previous image alive. At most one previous
   image is kept: the last one that was shown.

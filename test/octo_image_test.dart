@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:octo_image/octo_image.dart';
 
 import 'helpers/mock_image_provider.dart';
+import 'helpers/transparent_image.dart';
 
 void main() {
   testWidgets('errorBuilder called when image fails', (tester) async {
@@ -85,6 +86,33 @@ void main() {
     }
     expect(thrown, isFalse);
     expect(progressIndicatorCalled, 11);
+  });
+
+  testWidgets('rebuild with the same memCache size keeps the loaded image',
+      (tester) async {
+    Widget octo(BoxFit fit) => OctoImage(
+          image: MemoryImage(kTransparentImage),
+          memCacheWidth: 10,
+          memCacheHeight: 20,
+          gaplessPlayback: true,
+          fit: fit,
+          placeholderBuilder: (_) => const Text('placeholder'),
+        );
+    await tester.pumpWidget(Directionality(
+      textDirection: TextDirection.ltr,
+      child: octo(BoxFit.cover),
+    ));
+    await tester.pumpAndSettle();
+    final imageState = tester.state(find.byType(Image));
+
+    await tester.pumpWidget(Directionality(
+      textDirection: TextDirection.ltr,
+      child: octo(BoxFit.contain),
+    ));
+
+    expect(tester.state(find.byType(Image)), same(imageState));
+    expect(tester.hasRunningAnimations, isFalse);
+    expect(tester.widget<Image>(find.byType(Image)).fit, BoxFit.contain);
   });
 }
 

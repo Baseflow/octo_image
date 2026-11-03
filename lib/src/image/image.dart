@@ -334,7 +334,7 @@ class _OctoImageState extends State<OctoImage> {
   @override
   void didUpdateWidget(OctoImage oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.image != widget.image) {
+    if (imageIdentity(oldWidget.image) != imageIdentity(widget.image)) {
       if (widget.gaplessPlayback) {
         // Keep the last image (or error widget) that actually showed, in a
         // fresh handler so it doesn't hold on to the handler before it.

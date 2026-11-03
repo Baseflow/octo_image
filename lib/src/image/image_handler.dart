@@ -3,6 +3,22 @@ import 'package:flutter/widgets.dart';
 import '../../octo_image.dart';
 import 'fade_widget.dart';
 
+/// A value that is equal for two image providers that load the same image.
+///
+/// [ResizeImage] only overrides `==` since Flutter 3.38
+/// (flutter/flutter#172643), and `memCacheWidth`/`memCacheHeight` wrap the
+/// image in a new one on every build, so compare its fields instead. Replace
+/// with plain `==` once the minimum Flutter version is 3.38.
+Object imageIdentity(ImageProvider image) => image is ResizeImage
+    ? (
+        imageIdentity(image.imageProvider),
+        image.width,
+        image.height,
+        image.policy,
+        image.allowUpscaling,
+      )
+    : image;
+
 enum _PlaceholderType {
   none,
   static,
@@ -180,7 +196,7 @@ class ImageHandler {
 
   Widget build(BuildContext context) {
     return Image(
-      key: ValueKey(image),
+      key: ValueKey(imageIdentity(image)),
       image: image,
       loadingBuilder: imageLoadingBuilder(),
       frameBuilder: imageFrameBuilder(),
