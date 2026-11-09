@@ -1,4 +1,4 @@
-## [2.1.4] - 2026-10-29
+## [2.1.4] - 2026-11-09
 * Fix `gaplessPlayback` keeping every previous image alive. At most one previous
   image is kept: the last one that was shown.
   This changes what fast swaps show. If the image changes again before the new
