@@ -14,6 +14,9 @@ on:
 
 env:
   FLUTTER_VERSION: "3.47.4"
+  # Before 3.38, where ResizeImage has no value ==, which the memCache tests
+  # rely on to catch a regression.
+  LEGACY_FLUTTER_VERSION: "3.32.8"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -354,6 +357,32 @@ jobs:
       #     name: OctoImage # optional
       #     fail_ci_if_error: true
 
+  tests_legacy:
+    name: Unit-tests (legacy Flutter)
+    runs-on: ubuntu-latest
+
+    env:
+      source-directory: .
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: ${{ env.LEGACY_FLUTTER_VERSION }}
+          architecture: x64
+          cache: true
+
+      - name: Download dependencies
+        run: flutter pub get
+        working-directory: ${{env.source-directory}}
+
+      - name: Run unit tests
+        run: flutter test
+        working-directory: ${{env.source-directory}}
+
   publish:
     if: ${{ github.ref_type == 'tag' }}
     name: Publish
@@ -364,6 +393,7 @@ jobs:
         format,
         analyze,
         tests,
+        tests_legacy,
         build_android,
         build_ios,
         build_macOS,

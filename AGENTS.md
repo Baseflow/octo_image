@@ -169,6 +169,11 @@ leak-tests `FadeWidget`. `gapless_playback_test.dart` covers gapless playback
 (`didUpdateWidget`): which images stay in the tree across swaps, and that
 replaced images can be garbage collected. There are no golden tests.
 
+CI also runs `flutter test` on `LEGACY_FLUTTER_VERSION`, a Flutter before 3.38.
+Only there does `ResizeImage` lack a value `==`, so only there do the memCache
+tests in `octo_image_test.dart` catch a switch from `imageIdentity` back to
+`==`. Keep that version below 3.38 until the minimum Flutter is raised past it.
+
 Not covered directly: `ImageHandler`, the `OctoSet` factories, and
 `OctoImage.fromSet`.
 
