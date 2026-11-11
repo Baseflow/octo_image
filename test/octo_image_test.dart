@@ -92,26 +92,30 @@ void main() {
 
   testWidgets('rebuild with the same memCache size keeps the loaded image',
       (tester) async {
-    Widget octo(BoxFit fit) => OctoImage(
-          image: MemoryImage(kTransparentImage),
-          memCacheWidth: 10,
-          memCacheHeight: 20,
-          gaplessPlayback: true,
-          fit: fit,
-          placeholderBuilder: (_) => const Text('placeholder'),
+    Widget octo(BoxFit fit) => Directionality(
+          textDirection: TextDirection.ltr,
+          child: OctoImage(
+            image: MemoryImage(kTransparentImage),
+            memCacheWidth: 10,
+            memCacheHeight: 20,
+            gaplessPlayback: true,
+            fit: fit,
+            placeholderBuilder: (_) => const Text('placeholder'),
+          ),
         );
-    await tester.pumpWidget(Directionality(
-      textDirection: TextDirection.ltr,
-      child: octo(BoxFit.cover),
-    ));
-    await tester.pumpAndSettle();
+    // Precached so the image has really shown: only then can a wrong image
+    // change keep it as the previous image under gapless playback.
+    await tester.pumpWidget(const MaterialApp(home: SizedBox()));
+    final context = tester.element(find.byType(SizedBox));
+    await tester.runAsync(() => precacheImage(
+        ResizeImage(MemoryImage(kTransparentImage), width: 10, height: 20),
+        context));
+    await tester.pumpWidget(octo(BoxFit.cover));
     final imageState = tester.state(find.byType(Image));
 
-    await tester.pumpWidget(Directionality(
-      textDirection: TextDirection.ltr,
-      child: octo(BoxFit.contain),
-    ));
+    await tester.pumpWidget(octo(BoxFit.contain));
 
+    expect(find.byType(Image), findsOneWidget);
     expect(tester.state(find.byType(Image)), same(imageState));
     expect(tester.hasRunningAnimations, isFalse);
     expect(tester.widget<Image>(find.byType(Image)).fit, BoxFit.contain);
