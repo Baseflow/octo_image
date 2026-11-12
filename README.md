@@ -22,9 +22,7 @@ So, either set the all the components yourself:
 OctoImage(
   image: CachedNetworkImageProvider(
       'https://blurha.sh/assets/images/img1.jpg'),
-  placeholderBuilder: OctoPlaceholder.blurHash(
-    'LEHV6nWB2yk8pyo0adR*.7kCMdnj',
-  ),
+  placeholderBuilder: OctoPlaceholder.circularProgressIndicator(),
   errorBuilder: OctoError.icon(color: Colors.red),
   fit: BoxFit.cover,
 );
@@ -93,7 +91,6 @@ All included placeholders and progress indicators:
 
 |**OctoPlaceholder**|**Explanation**|
 |---|---|
-|blurHash|Shows a [BlurHash](https://blurha.sh/) image|
 |circleAvatar| Shows a colored circle with a text|
 |circularProgressIndicator|Shows a circularProgressIndicator with indeterminate progress.|
 |frame|Shows the Flutter Placeholder|
@@ -126,7 +123,6 @@ All included error widgets are:
 
 |**OctoError**|**Explanation**|
 |---|---|
-|blurHash|Shows a BlurHash placeholder with an error icon.|
 |circleAvatar|Shows a colored circle with a text|
 |icon|Shows an icon, default to Icons.error|
 |placeholderWithErrorIcon|Shows any placeholder with an icon op top.|
@@ -181,10 +177,16 @@ All included OctoSets are:
 |circularIndicatorAndIcon|Shows a circularProgressIndicator with or without progress and an icon on error.|
 
 ### Blurhash
-You can easily create your own OctoSet though, for example if you want to use blurHash as a placeholder:
+BlurHash support was removed from OctoImage in 2.0.0, but you can easily create your own OctoSet,
+for example if you want to use [BlurHash](https://blurha.sh/) as a placeholder.
+Add [flutter_blurhash](https://pub.dev/packages/flutter_blurhash) to your app's dependencies, which provides `BlurHashImage`:
 ```dart
-/// Simple set to show [OctoPlaceholder.circularProgressIndicator] as
-/// placeholder and [OctoError.icon] as error.
+import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:octo_image/octo_image.dart';
+
+/// Set that shows the BlurHash as placeholder, and the BlurHash with an
+/// error icon on top as error.
 OctoSet blurHash(
   String hash, {
   BoxFit? fit,
@@ -192,7 +194,7 @@ OctoSet blurHash(
 }) {
   return OctoSet(
     placeholderBuilder: blurHashPlaceholderBuilder(hash, fit: fit),
-    errorBuilder: blurHashErrorBuilder(hash, fit: fit),
+    errorBuilder: blurHashErrorBuilder(hash, fit: fit, message: errorMessage),
   );
 }
 
