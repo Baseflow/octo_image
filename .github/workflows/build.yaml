@@ -14,6 +14,9 @@ on:
 
 env:
   FLUTTER_VERSION: "3.47.4"
+  # Before 3.38, where ResizeImage has no value ==, which the memCache tests
+  # rely on to catch a regression.
+  LEGACY_FLUTTER_VERSION: "3.32.8"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -316,9 +319,15 @@ jobs:
         working-directory: ${{env.example-directory}}
 
   tests:
-    name: Unit-tests
+    # Same check names as before the matrix, so branch protection keeps matching.
+    name: Unit-tests${{ matrix.legacy && ' (legacy Flutter)' || '' }}
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        legacy: [false, true]
 
     env:
       source-directory: .
@@ -333,7 +342,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          flutter-version: ${{ matrix.legacy && env.LEGACY_FLUTTER_VERSION || env.FLUTTER_VERSION }}
           architecture: x64
           cache: true
 
@@ -342,13 +351,14 @@ jobs:
         run: flutter pub get
         working-directory: ${{env.source-directory}}
 
-      # Run all unit-tests with code coverage
+      # Run all unit-tests, with code coverage on the current Flutter only
       - name: Run unit tests
-        run: flutter test --coverage
+        run: flutter test ${{ !matrix.legacy && '--coverage' || '' }}
         working-directory: ${{env.source-directory}}
 
       # # Upload code coverage information
       # - uses: codecov/codecov-action@v4
+      #   if: ${{ !matrix.legacy }}
       #   with:
       #     file: ${{env.source-directory}}/coverage/lcov.info # optional
       #     name: OctoImage # optional

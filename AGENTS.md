@@ -95,9 +95,11 @@ Two things to know before changing `ImageHandler` or `OctoSet`:
   (or error widget) for gapless playback. They are side effects of the last
   build, so they only say what was on screen. Gapless
   playback lives in `_OctoImageState.didUpdateWidget`, which rebuilds the
-  `ImageHandler` on every widget update rather than only when the inputs
-  actually changed; that behavior is the subject of an open pull request, so
-  check for one before changing it.
+  `ImageHandler` on every widget update so that changed builders, `fit`,
+  `color` and so on reach the `Image`. Whether the image itself changed is
+  decided by `imageIdentity`, which also keys the `Image`: compare providers
+  through it, never with `==`, or a `memCacheWidth`/`memCacheHeight` rebuild
+  reloads the image on Flutter before 3.38.
 
 Keep changes minimal in scope; match existing naming and testing patterns.
 
@@ -166,6 +168,11 @@ transparent-image byte fixture under `test/helpers/`. `fade_widget_test.dart`
 leak-tests `FadeWidget`. `gapless_playback_test.dart` covers gapless playback
 (`didUpdateWidget`): which images stay in the tree across swaps, and that
 replaced images can be garbage collected. There are no golden tests.
+
+CI also runs `flutter test` on `LEGACY_FLUTTER_VERSION`, a Flutter before 3.38.
+Only there does `ResizeImage` lack a value `==`, so only there do the memCache
+tests in `octo_image_test.dart` catch a switch from `imageIdentity` back to
+`==`. Keep that version below 3.38 until the minimum Flutter is raised past it.
 
 Not covered directly: `ImageHandler`, the `OctoSet` factories, and
 `OctoImage.fromSet`.
