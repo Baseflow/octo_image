@@ -1,4 +1,4 @@
-## [2.1.5] - 2026-11-11
+## [2.1.5] - 2026-11-12
 * Rebuilding `OctoImage` with the same `image` and `memCacheWidth`/`memCacheHeight`
   no longer reloads the image and replays its placeholder fade on Flutter versions
   before 3.38, where `ResizeImage` has no `==`.
