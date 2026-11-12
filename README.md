@@ -161,6 +161,20 @@ All included image transformers are:
 |---|---|
 |circleAvatar|Clips the image in a circle|
 
+## Load notifications
+Use `onLoaded` to find out when the first frame of the image is decoded, and how long that took since OctoImage started loading it.
+`onLoadError` is called when the image fails to load.
+```dart
+OctoImage(
+  image: image,
+  onLoaded: (info) => print('Loaded ${info.size} in ${info.elapsed}'),
+  onLoadError: (error, stackTrace) => print('Failed: $error'),
+),
+```
+`info.synchronousCall` is true when the image was already decoded, for example because it was in the image cache.
+Each image is reported once, until the `image` changes.
+Setting `onLoadError` marks the error as handled, like `errorBuilder` does: in release builds without an `errorBuilder`, Flutter then no longer reports it to `FlutterError.onError`.
+
 ## OctoSets
 You get the most out of OctoImage when you use OctoSets. These sets contain a combination of a placeholder or progress indicator,
 an image builder and/or an error widget builder. It always contains at least a placeholder or progress indicator and an error widget.
